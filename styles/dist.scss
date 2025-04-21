@@ -1,0 +1,23 @@
+:root {
+    /* === LIGHT THEME VARIABLES === */
+    --color-brand: rgba(52, 114, 239, 1); /* #3472EF */
+    --color-text-light: rgba(182, 205, 251, 1); /* #B6CDFB */
+    --color-text-gray: rgba(75, 85, 99, 1); /* #4B5563 */
+    --color-text-muted: rgba(57, 57, 65, 1); /* #393941 */
+    --color-text-muted-light: rgba(182, 182, 182, 1); /* #B6B6B6 */
+
+    --color-border-default: rgba(217, 217, 217, 1); /* #D9D9D9 */
+    --color-border-dark: rgba(77, 77, 77, 1); /* #4D4D4D */
+
+    --color-bg: rgba(255, 255, 255, 1); /* #FFFFFF */
+    --color-foreground: rgba(17, 17, 17, 1); /* #111111 */
+
+    /* === DARK VARIANT === */
+    --color-dark-brand: rgba(110, 156, 247, 1); /* #6E9CF7 */
+    --color-dark-text-gray: rgba(209, 213, 219, 1); /* #D1D5DB */
+    --color-dark-text-muted: rgba(182, 182, 182, 1); /* #B6B6B6 */
+    --color-dark-border-default: rgba(77, 77, 77, 1); /* #4D4D4D */
+
+    --color-dark-bg: rgba(17, 24, 39, 1); /* #111827 */
+    --color-dark-foreground: rgba(237, 237, 237, 1); /* #EDEDED */
+}

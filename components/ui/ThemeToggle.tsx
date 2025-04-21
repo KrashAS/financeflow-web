@@ -10,7 +10,7 @@ export const ThemeToggle = () => {
     return (
         <button
             onClick={toggleTheme}
-            className={`p-2 rounded-md border cursor-pointer ${isDark ? "border-gray-600 hover:bg-gray-800" : "border-gray-300 hover:bg-gray-100"}`}
+            className={`p-2 rounded-md border cursor-pointer dark:border-gray-600 dark:hover:bg-gray-800 : border-gray-300 hover:bg-gray-100`}
             aria-label="Toggle theme"
         >
             {isDark ? <IconSun /> : <IconMoon />}
