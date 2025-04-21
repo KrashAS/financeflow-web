@@ -1,34 +1,56 @@
-import { FirestoreAdapter } from "@auth/firebase-adapter";
-import { cert } from "firebase-admin/app";
-import { AuthOptions } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                email: { label: "Email", type: "text" },
+                email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
             },
             async authorize(credentials) {
-                return {
-                    id: "1",
-                    name: "Test User",
-                    email: credentials?.email || "",
-                };
+                const res = await fetch("http://localhost:3000/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: credentials?.email,
+                        password: credentials?.password,
+                    }),
+                });
+
+                const user = await res.json();
+
+                if (!res.ok || !user) {
+                    throw new Error(user.error || "Login failed");
+                }
+
+                return user;
             },
         }),
     ],
-    adapter: FirestoreAdapter({
-        credential: cert({
-            projectId: process.env.FIREBASE_PROJECT_ID!,
-            clientEmail: process.env.FIREBASE_CLIENT_EMAIL!,
-            privateKey: process.env.FIREBASE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
-        }),
-    }),
-    session: {
-        strategy: "jwt" as const,
+    pages: {
+        signIn: "/auth/login",
     },
-    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+        strategy: "jwt",
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.uid = user.uid;
+                token.email = user.email ?? "";
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (token.uid) {
+                session.user.uid = token.uid;
+            }
+            session.user.email = token.email ?? "";
+            return session;
+        },
+    },
 };
