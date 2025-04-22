@@ -29,12 +29,11 @@ export default function RegisterPage() {
             return;
         }
 
-
         router.push("/auth/login");
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-background p-4">
+        <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-background p-4">
             <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-semibold mb-6 text-center">Register</h2>
                 <div className="mb-4">

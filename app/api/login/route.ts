@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
     const firebaseApiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-    console.log(`firebaseApiKey: ${firebaseApiKey}`);
+
     if (!firebaseApiKey) {
         return NextResponse.json(
             { error: "Firebase API key is missing" },
