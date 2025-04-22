@@ -1,4 +1,5 @@
 import Header from "@/components/layout/Header";
+import SessionProviderWrapper from "@/components/layout/SessionProviderWrapper";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -28,7 +29,9 @@ export default function RootLayout({
             <body
                 className={`bg-white text-black dark:bg-(--color-dark-bg) dark:text-white min-h-screen transition-colors ${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <Header />
+                <SessionProviderWrapper>
+                    <Header />
+                </SessionProviderWrapper>
                 {children}
             </body>
         </html>

@@ -24,12 +24,12 @@ export default function LoginPage() {
         if (result?.error) {
             setError("Invalid email or password");
         } else {
-            router.push("/");
+            router.push("/dashboard");
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-background p-4">
+        <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-background p-4">
             <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
                 <div className="mb-4">
