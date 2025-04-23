@@ -8,7 +8,11 @@ export function useTheme() {
     const toggleTheme = () => {
         const html = document.documentElement;
         const newTheme = !html.classList.contains("dark");
-        html.classList.toggle("dark", newTheme);
+        if (newTheme) {
+            html.classList.add("dark");
+        } else {
+            html.classList.remove("dark");
+        }
         localStorage.setItem("theme", newTheme ? "dark" : "light");
         setIsDark(newTheme);
     };
@@ -17,13 +21,19 @@ export function useTheme() {
         const html = document.documentElement;
         const stored = localStorage.getItem("theme");
 
-        if (stored) {
-            html.classList.toggle("dark", stored === "dark");
+        if (stored === "dark") {
+            html.classList.add("dark");
+        } else if (stored === "light") {
+            html.classList.remove("dark");
         } else {
             const prefersDark = window.matchMedia(
                 "(prefers-color-scheme: dark)"
             ).matches;
-            html.classList.toggle("dark", prefersDark);
+            if (prefersDark) {
+                html.classList.add("dark");
+            } else {
+                html.classList.remove("dark");
+            }
         }
 
         setIsDark(html.classList.contains("dark"));
