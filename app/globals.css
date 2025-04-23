@@ -8,10 +8,6 @@
     --font-mono: var(--font-geist-mono);
 }
 
-* {
-    transition: background 0.2s ease, color 0.2s ease;
-}
-
 body {
     font-family: var(--font-sans);
 }
