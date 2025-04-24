@@ -8,10 +8,7 @@
     --font-mono: var(--font-geist-mono);
 }
 
-* {
-    transition: all 0.25s ease-in-out;
-}
-
 body {
     font-family: var(--font-sans);
+    font-display: swap;
 }

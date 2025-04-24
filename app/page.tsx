@@ -5,7 +5,6 @@ export default function Home() {
     return (
         <div className="grid grid-rows-[20px_1fr_80px] items-center justify-items-center min-h-[calc(100vh-4rem)] p-8 pb-8 gap-16 sm:p-8 font-[family-name:var(--font-geist-sans)] bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
 
-            {/* MAIN SECTION */}
             <main className="flex flex-col gap-8 sm:gap-10 row-start-2 items-center sm:items-start max-w-3xl text-center sm:text-left">
                 <h1 className="text-4xl font-bold">
                     Welcome to <span className="text-[var(--color-brand)] dark:text-[var(--color-dark-brand)]">FinanceFlow</span> 👋
@@ -34,7 +33,6 @@ export default function Home() {
                 </div>
             </main>
 
-            {/* FOOTER */}
             <footer className="row-start-3 text-sm text-gray-400 dark:text-gray-500 text-center">
                 © {new Date().getFullYear()} FinanceFlow. All rights reserved.
             </footer>
