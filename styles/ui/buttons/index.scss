@@ -1,5 +1,5 @@
 button {
-    .btn {
+    &.btn {
         @apply cursor-pointer;
     }
 }
