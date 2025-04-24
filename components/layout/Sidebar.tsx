@@ -20,7 +20,9 @@ export default function Sidebar() {
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                 >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                    <path strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
 

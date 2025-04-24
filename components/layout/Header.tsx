@@ -6,7 +6,7 @@ import { ThemeToggle } from '../ui/ThemeToggle';
 import Sidebar from './Sidebar';
 
 export default function Header() {
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
 
     const handleLogout = () => {
         signOut({ callbackUrl: '/auth/login' });
@@ -27,7 +27,7 @@ export default function Header() {
                         Dashboard
                     </Link>
 
-                    {status === 'loading' ? null : session ? (
+                    {session ? (
                         <button
                             onClick={handleLogout}
                             className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)] cursor-pointer"

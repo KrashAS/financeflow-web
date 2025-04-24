@@ -1,0 +1,69 @@
+* {
+    transition: all 0.25s ease-in-out;
+}
+
+/* *,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    vertical-align: baseline;
+} */
+
+/* h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    font-weight: normal;
+} */
+
+/* ul,
+ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+} */
+
+/* a {
+    text-decoration: none;
+    color: inherit;
+} */
+
+/* table {
+    border-collapse: collapse;
+    width: 100%;
+} */
+
+/* th,
+td {
+    padding: 8px;
+    text-align: left;
+} */
+
+/* input,
+button,
+textarea,
+select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+} */
+
+/* ::before,
+::after {
+    box-sizing: inherit;
+} */
+
+html {
+    scroll-behavior: smooth;
+}
