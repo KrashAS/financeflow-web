@@ -1,10 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 
-export default function Sidebar() {
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+interface IProps {
+    isSidebarCollapsed: boolean;
+    setIsSidebarCollapsed: (value: boolean) => void;
+}
+
+export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: IProps) {
 
     return (
         <>

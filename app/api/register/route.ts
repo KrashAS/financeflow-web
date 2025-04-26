@@ -40,9 +40,9 @@ export async function POST(req: Request) {
     try {
         const user = await getAuth().createUser({ email, password });
         return NextResponse.json({ uid: user.uid, email: user.email });
-    } catch (err) {
+    } catch (error) {
         const errorMessage =
-            err instanceof Error ? err.message : "Unknown error occurred";
+            error instanceof Error ? error.message : "Unknown error occurred";
         return NextResponse.json({ error: errorMessage }, { status: 400 });
     }
 }

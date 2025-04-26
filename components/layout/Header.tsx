@@ -2,11 +2,14 @@
 
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useState } from 'react';
+import { Button } from '../ui/buttons/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import Sidebar from './Sidebar';
 
 export default function Header() {
     const { data: session } = useSession();
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
     const handleLogout = () => {
         signOut({ callbackUrl: '/auth/login' });
@@ -20,9 +23,14 @@ export default function Header() {
                 </div>
 
                 <nav className="space-x-4 flex items-center">
+                    <Button
+                        onClickButton={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                        className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)]"
+                        title='Menu' />
+
                     <Link
                         href="/dashboard"
-                        className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)]"
+                        className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)] hidden sm:block"
                     >
                         Dashboard
                     </Link>
@@ -46,7 +54,8 @@ export default function Header() {
                     <ThemeToggle />
                 </nav>
             </div>
-            {session && <Sidebar />}
+            {session && <Sidebar isSidebarCollapsed={isSidebarCollapsed}
+                setIsSidebarCollapsed={setIsSidebarCollapsed} />}
         </header>
     );
 }

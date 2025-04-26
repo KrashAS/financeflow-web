@@ -40,20 +40,20 @@ export const Select = ({
     return (
         <div ref={ref}
             className={classNames("relative inline-block", className)}>
-            <SelectTrigger onClick={() => setIsOpen((o) => !o)}>
+            <SelectTrigger onClick={() => setIsOpen((prev) => !prev)}>
                 <SelectValue placeholder={placeholder}>{selected || placeholder}</SelectValue>
             </SelectTrigger>
 
             {isOpen && (
                 <SelectContent>
-                    {options.map((opt) => (
+                    {options.map((option) => (
                         <SelectItem
-                            key={opt}
-                            value={opt}
-                            onClick={() => handleSelect(opt)}
-                            isSelected={opt === selected}
+                            key={option}
+                            value={option}
+                            onClick={() => handleSelect(option)}
+                            isSelected={option === selected}
                         >
-                            {opt}
+                            {option}
                         </SelectItem>
                     ))}
                 </SelectContent>
