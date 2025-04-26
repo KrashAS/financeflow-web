@@ -19,7 +19,7 @@ export const Button: React.FC<ButtonProps> = ({
     return (
         <button
             type={type}
-            className={`${className}`}
+            className={`cursor-pointer ${className}`}
             onClick={onClickButton}
         >
             {title}
