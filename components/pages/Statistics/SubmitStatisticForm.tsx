@@ -50,7 +50,8 @@ export default function SubmitStatisticForm() {
                 >
                     {METRIC_TYPES.map((m) => (
                         <option key={m}
-                            value={m}>
+                            value={m}
+                            className="text-black">
                             {m.charAt(0).toUpperCase() + m.slice(1)}
                         </option>
                     ))}
@@ -70,6 +71,7 @@ export default function SubmitStatisticForm() {
             <Button
                 type="submit"
                 title={isSubmitting ? "Saving..." : "Save"}
+                className="btn w-fit bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
                 disabled={isSubmitting}
             />
         </form>
