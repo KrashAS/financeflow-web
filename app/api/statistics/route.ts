@@ -1,4 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
+
+export async function GET(req: Request) {
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get("userId");
+    if (!userId) {
+        return NextResponse.json(
+            { error: "Missing userId query parameter" },
+            { status: 400 }
+        );
+    }
+
+    const stats = await prisma.statistic.findMany({
+        where: { userId },
+        orderBy: { createdAt: "desc" },
+    });
+
+    return NextResponse.json(stats);
+}
+/* import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     try {
@@ -26,4 +46,4 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
-}
+} */

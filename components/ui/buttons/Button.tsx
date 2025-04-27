@@ -8,6 +8,7 @@ interface ButtonProps {
     type?: 'button' | 'submit' | 'reset';
     onClickButton?: () => void;
     className?: string;
+    disabled?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -15,12 +16,14 @@ export const Button: React.FC<ButtonProps> = ({
     type = 'button',
     onClickButton,
     className = '',
+    disabled = false
 }) => {
     return (
         <button
             type={type}
             className={`cursor-pointer ${className}`}
             onClick={onClickButton}
+            disabled={disabled}
         >
             {title}
         </button>

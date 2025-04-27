@@ -3,18 +3,27 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const { userId, type, amount } = await req.json();
-        if (!userId || !type || typeof amount !== "number") {
+        const { userId, revenue, users, profit } = await req.json();
+
+        if (!userId || !revenue || !users || !profit) {
             return NextResponse.json({ error: "Missing fields" }, { status: 400 });
         }
 
-        const stat = await prisma.statistic.create({
-            data: { userId, type, amount },
-        });
+        const [stat1, stat2, stat3] = await Promise.all([
+            prisma.statistic.create({
+                data: { userId, type: "revenue", amount: parseFloat(revenue) },
+            }),
+            prisma.statistic.create({
+                data: { userId, type: "users", amount: parseFloat(users) },
+            }),
+            prisma.statistic.create({
+                data: { userId, type: "profit", amount: parseFloat(profit) },
+            }),
+        ]);
 
-        return NextResponse.json(stat);
-    } catch (e) {
-        console.error("API Error >", e);
+        return NextResponse.json({ revenue: stat1, users: stat2, profit: stat3 });
+    } catch (error) {
+        console.error("API Error >", error);
         return NextResponse.json({ error: "Internal error" }, { status: 500 });
     }
 }
