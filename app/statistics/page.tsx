@@ -1,9 +1,10 @@
+import WrapperForPage from "@/components/layout/WrapperForPage";
 import Statistics from "@/components/pages/Statistics";
 import Link from "next/link";
 
 export default function StatisticsPage() {
     return (
-        <main className="p-0 pt-8 sm:p-4 sm:pt-6 max-w-[1400px] mx-auto">
+        <WrapperForPage>
             <div className="p-6">
                 <div className="flex justify-between mb-4 items-center">
                     <h1 className="text-2xl font-bold mb-2">Statistics</h1>
@@ -17,6 +18,6 @@ export default function StatisticsPage() {
 
                 <Statistics />
             </div>
-        </main>
+        </WrapperForPage>
     );
 }

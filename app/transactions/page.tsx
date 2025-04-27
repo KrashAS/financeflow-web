@@ -1,3 +1,4 @@
+import WrapperForPage from "@/components/layout/WrapperForPage";
 import TransactionsList from "@/components/pages/transactions/TransactionsList";
 
 
@@ -17,11 +18,11 @@ export default async function TransactionsPage() {
     const transactions = await getTransactions();
 
     return (
-        <main className="p-0 pt-8 sm:p-4 sm:pt-6 max-w-[1400px] mx-auto">
+        <WrapperForPage>
             <div className="p-6 space-y-6">
                 <h1 className="text-2xl font-bold mb-4">Transactions</h1>
                 <TransactionsList transactions={transactions} />
             </div >
-        </main >
+        </WrapperForPage>
     );
 }
