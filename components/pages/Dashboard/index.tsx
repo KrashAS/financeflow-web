@@ -50,7 +50,7 @@ export default function Dashboard() {
     return (
         <div className="p-6 space-y-6">
 
-            <h1 className="text-2xl font-bold pl-4">📊 Analytics Dashboard</h1>
+            <h1 className="text-2xl font-bold">📊 Analytics Dashboard</h1>
 
             <div className="flex flex-wrap gap-4">
                 <Select value={period}

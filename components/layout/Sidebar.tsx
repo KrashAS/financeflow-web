@@ -56,6 +56,12 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: I
                         >
                             Budgets
                         </Link>
+                        <Link
+                            href="/statistics"
+                            className="text-(--color-text-gray) dark:text-(--color-dark-text-gray) hover:text-(--color-brand) dark:hover:text-(--color-dark-brand)"
+                        >
+                            Statistics
+                        </Link>
                     </nav>
                 </div>
             </aside>
