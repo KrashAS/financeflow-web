@@ -2,19 +2,31 @@ name: Quick CI
 
 on:
     pull_request:
-        branches:
-            - main
+        branches: [main]
     push:
-        branches:
-            - main
+        branches: [main]
 
 jobs:
     check:
         runs-on: ubuntu-latest
 
+        services:
+            postgres:
+                image: postgres:17
+                env:
+                    POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+                    POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+                    POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+                ports:
+                    - 5433:5432
+                options: >-
+                    --health-cmd "pg_isready -U postgres"
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+            - uses: actions/checkout@v4
 
             - name: Set up Node.js
               uses: actions/setup-node@v4
@@ -24,20 +36,27 @@ jobs:
             - name: Install dependencies
               run: npm ci
 
-            - name: Run ESLint (linting)
+            - name: Run ESLint
               run: npm run lint
 
             - name: Run TypeScript type-check
               run: npm run type-check
 
-            - name: Build the project
-              run: npm run build
+            - name: Run Prisma migrations
               env:
+                  # беремо повний URL до БД із секрету
+                  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+              run: npx prisma migrate deploy
+
+            - name: Build the project
+              env:
+                  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+                  NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+                  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+                  # решта ваших секретів...
                   FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
                   FIREBASE_CLIENT_EMAIL: ${{ secrets.FIREBASE_CLIENT_EMAIL }}
                   FIREBASE_PRIVATE_KEY: ${{ secrets.FIREBASE_PRIVATE_KEY }}
-                  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-                  NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
                   GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
                   GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
                   NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
@@ -47,3 +66,4 @@ jobs:
                   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
                   NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
                   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+              run: npm run build

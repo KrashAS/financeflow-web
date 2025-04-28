@@ -2,7 +2,7 @@
 
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
@@ -12,9 +12,11 @@ export default function Header() {
     const { data: session } = useSession();
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
     const pathname = usePathname();
+    const router = useRouter();
 
-    const handleLogout = () => {
-        signOut({ callbackUrl: '/auth/login' });
+    const handleLogout = async () => {
+        await signOut({ redirect: false });
+        router.push('/auth/login');
     };
 
     useEffect(() => {
