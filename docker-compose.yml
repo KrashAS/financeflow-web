@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+    db:
+        image: postgres:17
+        container_name: financeflow-db
+        restart: always
+        env_file:
+            - .env
+
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+        ports:
+            - "5433:5432"
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: financeflow-app
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - "3000:3000"
+        depends_on:
+            db:
+                condition: service_healthy
+        command: >
+            sh -c "
+              npx prisma migrate deploy &&
+              npm start
+            "
+
+volumes:
+    postgres-data:

@@ -2,15 +2,22 @@ import WrapperForPage from "@/components/layout/WrapperForPage";
 import AddBudgetButton from "@/components/pages/budgets/AddBudgetButton";
 import BudgetsList from "@/components/pages/budgets/BudgetsList";
 import { formatDate } from "@/lib/formatDate";
-
 import { prisma } from "@/lib/prisma";
+export const dynamic = 'force-dynamic';
+
+type Budget = {
+    id: number | string;
+    title: string;
+    amount: number;
+    createdAt: Date;
+};
 
 export default async function BudgetsPage() {
     const budgets = await prisma.budget.findMany({
         orderBy: { createdAt: "desc" },
     });
 
-    const formattedBudgets = budgets.map((budget) => ({
+    const formattedBudgets = budgets.map((budget: Budget) => ({
         id: budget.id.toString(),
         name: budget.title,
         amount: budget.amount,
