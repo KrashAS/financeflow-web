@@ -1,8 +1,11 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
+import { POPUP_NAMES } from '@/constants/popupNames';
+import { useAppDispatch } from '@/lib/hooks/useRedux';
+import { openPopup } from '@/lib/redux/features/popup/popupSlice';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
@@ -12,11 +15,11 @@ export default function Header() {
     const { data: session } = useSession();
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
     const pathname = usePathname();
-    const router = useRouter();
+    const dispatch = useAppDispatch();
 
-    const handleLogout = async () => {
-        await signOut({ redirect: false });
-        router.push('/auth/login');
+    const logoutClick = () => {
+        setIsSidebarCollapsed(true);
+        dispatch(openPopup(POPUP_NAMES.LOGOUT));
     };
 
     useEffect(() => {
@@ -24,7 +27,7 @@ export default function Header() {
     }, [pathname]);
 
     return (
-        <header className="sticky top-0 z-50 w-full transition: all 0.25s ease;">
+        <header className="sticky top-0 z-50 w-full">
             <div className="w-full px-4 h-16 flex items-center justify-between backdrop-blur-md bg-white/70 dark:bg-gray-900/70 border-b border-(--color-border-default) dark:border-(--color-dark-border-default) rounded-b-2xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_12px_rgba(255,255,255,0.05)]">
                 <div className="text-xl font-bold text-[color:var(--color-brand)] dark:text-[color:var(--color-dark-brand)]">
                     <Link href="/">FinanceFlow</Link>
@@ -50,7 +53,7 @@ export default function Header() {
                             Dashboard
                         </Link>
                         <button
-                            onClick={handleLogout}
+                            onClick={logoutClick}
                             className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)] cursor-pointer"
                         >
                             Logout

@@ -1,7 +1,7 @@
 import WrapperForPage from '@/components/layout/WrapperForPage';
 import SubmitStatisticForm from '@/components/pages/Statistics/SubmitStatisticForm';
 
-export default function DataEntryPage() {
+export default async function DataEntryPage() {
     return (
         <WrapperForPage>
             <div className="p-6 space-y-6">
