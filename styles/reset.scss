@@ -1,5 +1,9 @@
-* {
+/* * {
     transition: all 0.25s ease-in-out;
+} */
+
+html {
+    scroll-behavior: smooth;
 }
 
 /* *,
@@ -63,7 +67,3 @@ select {
 ::after {
     box-sizing: inherit;
 } */
-
-html {
-    scroll-behavior: smooth;
-}

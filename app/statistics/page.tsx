@@ -2,7 +2,7 @@ import WrapperForPage from "@/components/layout/WrapperForPage";
 import Statistics from "@/components/pages/Statistics";
 import Link from "next/link";
 
-export default function StatisticsPage() {
+export default async function StatisticsPage() {
     return (
         <WrapperForPage>
             <div className="p-6">
