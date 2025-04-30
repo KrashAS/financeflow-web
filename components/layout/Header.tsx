@@ -16,6 +16,11 @@ export default function Header() {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
     const pathname = usePathname();
     const dispatch = useAppDispatch();
+    const name = session?.user?.name;
+
+    const closeSidebar = () => {
+        setIsSidebarCollapsed(true)
+    }
 
     const logoutClick = () => {
         setIsSidebarCollapsed(true);
@@ -23,7 +28,7 @@ export default function Header() {
     };
 
     useEffect(() => {
-        setIsSidebarCollapsed(true);
+        closeSidebar()
     }, [pathname]);
 
     return (
@@ -36,6 +41,7 @@ export default function Header() {
                 <nav className="space-x-4 flex items-center">
                     <Link
                         href="/"
+                        onClick={closeSidebar}
                         className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)] hidden sm:block"
                     >
                         Home
@@ -48,6 +54,7 @@ export default function Header() {
 
                         <Link
                             href="/dashboard"
+                            onClick={closeSidebar}
                             className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)] hidden sm:block"
                         >
                             Dashboard
@@ -73,6 +80,11 @@ export default function Header() {
             </div>
             {session && <Sidebar isSidebarCollapsed={isSidebarCollapsed}
                 setIsSidebarCollapsed={setIsSidebarCollapsed} />}
+            {name && (
+                <div className="fixed z-60 top-19 right-2 px-4 py-1 rounded-full bg-gradient-to-r from-sky-200 via-teal-100 to-lime-200 text-gray-800 font-medium text-sm shadow-md">
+                    Hi, {name}!
+                </div>
+            )}
         </header>
     );
 }
