@@ -8,6 +8,7 @@ export default function RegisterPage() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
     const [error, setError] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -19,7 +20,7 @@ export default function RegisterPage() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password, name }),
         });
 
         const data = await res.json();
@@ -30,6 +31,10 @@ export default function RegisterPage() {
             return;
         }
 
+        setEmail("");
+        setPassword("");
+        setName("");
+        setError("");
         router.push("/auth/login");
     };
 
@@ -39,6 +44,19 @@ export default function RegisterPage() {
                 className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-semibold mb-6 text-center">Register</h2>
                 <div className="mb-4">
+                    <label htmlFor="name"
+                        className="block mb-1">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        autoComplete="username"
+                        required
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
+                    />
+                </div>
+                <div className="mb-4">
                     <label className="block mb-1"
                         htmlFor="email">Email</label>
                     <input
@@ -46,6 +64,7 @@ export default function RegisterPage() {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="email"
                         required
                         className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
                     />
@@ -58,13 +77,14 @@ export default function RegisterPage() {
                         id="password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        autoComplete="current-password"
                         required
                         className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
                     />
                 </div>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <Button type="submit"
-                    className="btn w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+                    className="btn btn-primary w-full py-2 px-4 rounded"
                     title='Sign Up' />
             </form>
         </div>

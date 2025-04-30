@@ -1,7 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/buttons/Button";
-import { signIn } from "next-auth/react";
+import { storage } from "@/utils/storage";
+import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -25,6 +26,19 @@ export default function LoginPage() {
         if (result?.error) {
             setError("Invalid email or password");
         } else {
+            const session = await getSession();
+            const user = session?.user;
+            console.log("session", session);
+
+            if (user) {
+                storage.setItem("user", {
+                    id: user.uid || "",
+                    name: user.name || null,
+                });
+            }
+            setEmail("");
+            setPassword("");
+            setError("");
             router.push("/dashboard");
         }
     };
@@ -42,6 +56,7 @@ export default function LoginPage() {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="email"
                         required
                         className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
                     />
@@ -54,13 +69,14 @@ export default function LoginPage() {
                         id="password"
                         value={password}
                         onChange={e => setPassword(e.target.value)}
+                        autoComplete="current-password"
                         required
                         className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
                     />
                 </div>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <Button type="submit"
-                    className="btn w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+                    className="btn btn-primary w-full py-2 px-4 rounded"
                     title='Sign In' />
 
                 <p className="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">

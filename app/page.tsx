@@ -1,13 +1,18 @@
 import Footer from '@/components/layout/Footer';
+import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { authOptions } from './api/auth/[...nextauth]/authOptions';
 
-export default function Home() {
+export default async function Home() {
+    const session = await getServerSession(authOptions);
+    const userName = session?.user?.name;
+
     return (
         <div className="grid grid-rows-[20px_1fr_80px] items-center justify-items-center min-h-[calc(100vh-4rem)] p-8 pb-8 gap-16 sm:p-8 font-[family-name:var(--font-geist-sans)] bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
             <main className="flex flex-col gap-8 sm:gap-10 row-start-2 items-center sm:items-start max-w-4xl text-center sm:text-left">
                 <h1 className="text-4xl font-bold">
-                    Welcome to <span className="text-[var(--color-brand)] dark:text-[var(--color-dark-brand)]">FinanceFlow</span> 👋
+                    Welcome{userName ? `, ${userName}` : ""} to <span className="text-[var(--color-brand)] dark:text-[var(--color-dark-brand)]">FinanceFlow</span> 👋
                 </h1>
 
                 <p className="text-lg text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)]">
@@ -38,7 +43,7 @@ export default function Home() {
 
                 <Link
                     href="/dashboard"
-                    className="px-6 py-3 bg-[var(--color-btn-primary)] text-white text-lg rounded-lg hover:bg-[var(--color-btn-primary-hover)] transition dark:bg-[var(--color-dark-btn-primary)] dark:hover:bg-[var(--color-dark-btn-primary-hover)]"
+                    className="px-6 py-3 rounded-lg btn btn-primary"
                 >
                     Get Started
                 </Link>

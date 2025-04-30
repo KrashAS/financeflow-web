@@ -1,5 +1,18 @@
-button {
+button,
+a {
     &.btn {
-        @apply cursor-pointer;
+        @apply cursor-pointer transition;
+    }
+
+    &.btn-primary {
+        @apply bg-blue-600 text-white  hover:bg-blue-700;
+    }
+
+    &.btn-secondary {
+        @apply bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-600;
+    }
+
+    &.btn-warning {
+        @apply bg-red-600 text-white  hover:bg-red-700;
     }
 }

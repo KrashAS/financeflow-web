@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface IProps {
     isSidebarCollapsed: boolean;
@@ -8,6 +9,14 @@ interface IProps {
 }
 
 export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: IProps) {
+    const pathname = usePathname();
+
+    const links = [
+        { href: '/dashboard', label: 'Dashboard' },
+        { href: '/transactions', label: 'Transactions' },
+        { href: '/budgets', label: 'Budgets' },
+        { href: '/statistics', label: 'Statistics' },
+    ];
 
     return (
         <>
@@ -17,7 +26,7 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: I
                 aria-label="Toggle sidebar"
             >
                 <svg
-                    className={`w-5 h-5 text-(--color-brand) dark:text-(--color-dark-brand) transition-transform duration-300 ${isSidebarCollapsed ? 'rotate-180 ' : ''}`}
+                    className={`w-5 h-5 text-(--color-brand) dark:text-(--color-dark-brand) transition-transform duration-300 ${isSidebarCollapsed ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -38,30 +47,18 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: I
                         }`}
                 >
                     <nav className="flex flex-col p-4 pt-16 space-y-4">
-                        <Link
-                            href="/dashboard"
-                            className="text-(--color-text-gray) dark:text-(--color-dark-text-gray) hover:text-(--color-brand) dark:hover:text-(--color-dark-brand)"
-                        >
-                            Dashboard
-                        </Link>
-                        <Link
-                            href="/transactions"
-                            className="text-(--color-text-gray) dark:text-(--color-dark-text-gray) hover:text-(--color-brand) dark:hover:text-(--color-dark-brand)"
-                        >
-                            Transactions
-                        </Link>
-                        <Link
-                            href="/budgets"
-                            className="text-(--color-text-gray) dark:text-(--color-dark-text-gray) hover:text-(--color-brand) dark:hover:text-(--color-dark-brand)"
-                        >
-                            Budgets
-                        </Link>
-                        <Link
-                            href="/statistics"
-                            className="text-(--color-text-gray) dark:text-(--color-dark-text-gray) hover:text-(--color-brand) dark:hover:text-(--color-dark-brand)"
-                        >
-                            Statistics
-                        </Link>
+                        {links.map(({ href, label }) => (
+                            <Link
+                                key={href}
+                                href={href}
+                                className={`transition-colors ${pathname === href
+                                        ? 'text-[var(--color-brand)] dark:text-[var(--color-dark-brand)] font-semibold'
+                                        : 'text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] hover:text-[var(--color-brand)] dark:hover:text-[var(--color-dark-brand)]'
+                                    }`}
+                            >
+                                {label}
+                            </Link>
+                        ))}
                     </nav>
                 </div>
             </aside>

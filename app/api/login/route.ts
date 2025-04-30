@@ -19,7 +19,7 @@ export async function POST(req: Request) {
         );
     }
 
-    const res = await fetch(
+    const loginRes = await fetch(
         `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebaseApiKey}`,
         {
             method: "POST",
@@ -32,19 +32,35 @@ export async function POST(req: Request) {
         }
     );
 
-    const data = await res.json();
+    const loginData = await loginRes.json();
 
-    if (!res.ok) {
-        console.error("Firebase error:", data.error?.message);
+    if (!loginRes.ok) {
+        console.error("Firebase login error:", loginData.error?.message);
         return NextResponse.json(
-            { error: data.error?.message || "Login failed" },
+            { error: loginData.error?.message || "Login failed" },
             { status: 400 }
         );
     }
 
+    const { idToken, localId: uid } = loginData;
+
+    const accountInfoRes = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${firebaseApiKey}`,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idToken }),
+        }
+    );
+
+    const accountInfoData = await accountInfoRes.json();
+
+    const userInfo = accountInfoData?.users?.[0];
+
     return NextResponse.json({
-        uid: data.localId,
-        email: data.email,
-        idToken: data.idToken,
+        uid,
+        email: loginData.email,
+        name: userInfo?.displayName || null,
+        idToken,
     });
 }
