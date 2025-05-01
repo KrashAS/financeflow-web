@@ -42,34 +42,34 @@ export default function Header() {
                     <Link
                         href="/"
                         onClick={closeSidebar}
-                        className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)] hidden sm:block"
+                        className="nav-link hidden sm:block"
                     >
                         Home
                     </Link>
-                    {session ? (<>
-                        <Button
-                            onClickButton={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                            className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)]"
-                            title='Menu' />
+                    {session ? (
+                        <>
+                            <Button
+                                onClickButton={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                                className="btn nav-btn"
+                                title='Menu' />
 
-                        <Link
-                            href="/dashboard"
-                            onClick={closeSidebar}
-                            className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)] hidden sm:block"
-                        >
-                            Dashboard
-                        </Link>
-                        <button
-                            onClick={logoutClick}
-                            className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)] cursor-pointer"
-                        >
-                            Logout
-                        </button>
-                    </>
+                            <Link
+                                href="/dashboard"
+                                onClick={closeSidebar}
+                                className="nav-link hidden sm:block"
+                            >
+                                Dashboard
+                            </Link>
+                            <Button
+                                onClickButton={logoutClick}
+                                className="btn nav-btn"
+                                title='Logout'
+                            />
+                        </>
                     ) : (
                         <Link
                             href="/auth/login"
-                            className="text-[color:var(--color-text-gray)] dark:text-[color:var(--color-dark-text-gray)] hover:text-[color:var(--color-brand)] dark:hover:text-[color:var(--color-dark-brand)]"
+                            className="nav-link"
                         >
                             Login
                         </Link>
@@ -78,8 +78,13 @@ export default function Header() {
                     <ThemeToggle />
                 </nav>
             </div>
-            {session && <Sidebar isSidebarCollapsed={isSidebarCollapsed}
-                setIsSidebarCollapsed={setIsSidebarCollapsed} />}
+
+            {session &&
+                <Sidebar isSidebarCollapsed={isSidebarCollapsed}
+                    setIsSidebarCollapsed={setIsSidebarCollapsed}
+                />
+            }
+
             {name && (
                 <div className="fixed z-60 top-19 right-2 px-4 py-1 rounded-full bg-gradient-to-r from-sky-200 via-teal-100 to-lime-200 text-gray-800 font-medium text-sm shadow-md">
                     Hi, {name}!
