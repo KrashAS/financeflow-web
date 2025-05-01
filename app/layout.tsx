@@ -2,7 +2,7 @@ import Header from "@/components/layout/Header";
 import SessionProviderWrapper from "@/components/layout/SessionProviderWrapper";
 import PopupsContainer from "@/components/popups/PopupsContainer";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
 
@@ -11,11 +11,11 @@ const geistSans = Geist({
     subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
+/* const geistMono = Geist_Mono({
     variable: "--font-geist-mono",
     subsets: ["latin"],
 });
-
+ */
 export const metadata: Metadata = {
     title: "Finance Flow",
     description: "Simple finance tracker",
@@ -32,7 +32,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`bg-white text-black dark:bg-(--color-dark-bg) dark:text-white min-h-screen ${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`bg-white text-black dark:bg-(--color-dark-bg) dark:text-white min-h-screen ${geistSans.variable} antialiased`}
             >
                 <StoreProvider>
                     <SessionProviderWrapper>

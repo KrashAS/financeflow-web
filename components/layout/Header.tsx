@@ -6,7 +6,7 @@ import { openPopup } from '@/lib/redux/features/popup/popupSlice';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname, } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import Sidebar from './Sidebar';
@@ -16,6 +16,7 @@ export default function Header() {
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
     const pathname = usePathname();
     const dispatch = useAppDispatch();
+    const menuButtonRef = useRef<HTMLButtonElement>(null);
     const name = session?.user?.name;
 
     const closeSidebar = () => {
@@ -23,7 +24,6 @@ export default function Header() {
     }
 
     const logoutClick = () => {
-        setIsSidebarCollapsed(true);
         dispatch(openPopup(POPUP_NAMES.LOGOUT));
     };
 
@@ -49,13 +49,13 @@ export default function Header() {
                     {session ? (
                         <>
                             <Button
+                                ref={menuButtonRef}
                                 onClickButton={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
                                 className="btn nav-btn"
                                 title='Menu' />
 
                             <Link
                                 href="/dashboard"
-                                onClick={closeSidebar}
                                 className="nav-link hidden sm:block"
                             >
                                 Dashboard
@@ -82,6 +82,7 @@ export default function Header() {
             {session &&
                 <Sidebar isSidebarCollapsed={isSidebarCollapsed}
                     setIsSidebarCollapsed={setIsSidebarCollapsed}
+                    insideRef={menuButtonRef}
                 />
             }
 

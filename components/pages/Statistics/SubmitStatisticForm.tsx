@@ -1,5 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/buttons/Button';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -68,13 +69,20 @@ export default function SubmitStatisticForm() {
                 />
             </div>
             {error && <p className="text-red-500">{error}</p>}
-
-            <Button
-                type="submit"
-                title={isSubmitting ? "Saving..." : "Save"}
-                className="btn btn-primary w-fit py-2 px-4 rounded transition"
-                disabled={isSubmitting}
-            />
+            <div className='flex justify-between'>
+                <Button
+                    type="submit"
+                    title={isSubmitting ? "Saving..." : "Save"}
+                    className="btn btn-primary w-fit py-2 px-4 rounded transition"
+                    disabled={isSubmitting}
+                />
+                <Link
+                    href="/statistics"
+                    className="btn-secondary inline-block px-4 py-2 rounded "
+                >
+                    Back
+                </Link>
+            </div>
         </form>
     );
 }

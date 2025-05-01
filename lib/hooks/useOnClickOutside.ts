@@ -2,32 +2,47 @@ import { RefObject, useEffect } from "react";
 
 type Event = MouseEvent | TouchEvent;
 
-const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
-    reference: RefObject<T>,
+const useOnClickOutside = (
+    reference: RefObject<HTMLElement | null>,
     callback: (event: Event) => void,
-    ignoreClass?: string
+    options?: {
+        ignoreClass?: string;
+        ignoreRefs?: RefObject<HTMLElement | null>[];
+    }
 ) => {
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            const shouldIgnore =
-                ignoreClass &&
-                event.target instanceof Element &&
-                event.target.closest(`.${ignoreClass}`);
+        const handler = (event: Event) => {
+            const target = event.target as Node;
+
+            const clickedInsideRef =
+                reference.current && reference.current.contains(target);
+
+            const clickedInsideIgnoreRef = options?.ignoreRefs?.some(
+                (ref) => ref.current && ref.current.contains(target)
+            );
+
+            const clickedInsideIgnoreClass =
+                options?.ignoreClass &&
+                target instanceof Element &&
+                target.closest(`.${options.ignoreClass}`);
 
             if (
-                reference.current &&
-                !reference.current.contains(event.target as Node) &&
-                !shouldIgnore
+                !clickedInsideRef &&
+                !clickedInsideIgnoreRef &&
+                !clickedInsideIgnoreClass
             ) {
                 callback(event);
             }
         };
 
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", handler);
+        document.addEventListener("touchstart", handler);
+
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("mousedown", handler);
+            document.removeEventListener("touchstart", handler);
         };
-    }, [reference, callback, ignoreClass]);
+    }, [reference, callback, options]);
 };
 
 export default useOnClickOutside;

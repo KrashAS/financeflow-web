@@ -1,14 +1,17 @@
 'use client';
 
+import useOnClickOutside from '@/lib/hooks/useOnClickOutside';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { RefObject, useRef } from 'react';
 
 interface IProps {
     isSidebarCollapsed: boolean;
     setIsSidebarCollapsed: (value: boolean) => void;
+    insideRef: RefObject<HTMLButtonElement | null>
 }
 
-export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: IProps) {
+export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed, insideRef }: IProps) {
     const links = [
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/transactions', label: 'Transactions' },
@@ -16,11 +19,20 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: I
         { href: '/statistics', label: 'Statistics' },
     ];
     const pathname = usePathname();
+    const sidebarRef = useRef<HTMLDivElement>(null);
+    const toggleBtnRef = useRef<HTMLButtonElement>(null);
+
+    useOnClickOutside(sidebarRef, () => {
+        if (!isSidebarCollapsed) setIsSidebarCollapsed(true);
+    }, {
+        ignoreRefs: [toggleBtnRef, insideRef],
+    });
 
     return (
         <>
             <button
                 onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                ref={toggleBtnRef}
                 className="fixed z-60 top-16 left-0 m-2 p-2 rounded-full bg-white dark:bg-gray-800 shadow-md border border-gray-300 dark:border-gray-600 hover:scale-105 transition-transform duration-200 cursor-pointer"
                 aria-label="Toggle sidebar"
             >
@@ -38,6 +50,7 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: I
             </button>
 
             <aside
+                ref={sidebarRef}
                 className={`fixed z-55 top-16 left-0 h-[calc(100vh-4rem)] bg-white/70 dark:bg-gray-900/70 backdrop-blur-md border-r border-gray-200 dark:border-gray-700 flex flex-col items-start transition-all duration-300 ease-in-out ${isSidebarCollapsed ? 'w-0 border-r-0' : 'w-64'
                     }`}
             >
