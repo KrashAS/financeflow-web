@@ -1,6 +1,6 @@
 # 💼 financeflow-web
 
-**financeflow-web** is a custom admin panel built for managing users, content, logs, and system settings in real time. Designed for internal use by teams, it provides a fast, modern interface that interacts with the backend via REST APIs and WebSockets.
+**financeflow-web** is a custom admin panel built for managing users, content, logs, and system settings in real time. Designed for internal use by teams, it provides a fast, modern interface that interacts with the backend via REST APIs.
 
 ---
 
@@ -38,24 +38,7 @@
 
 ## 📁 Project Structure
 
-├── app/ # Next.js 15 App Router structure
-├── components/ # Reusable UI components
-├── constants/ # Global constants
-├── lib/ # Logic utilities (e.g. API, auth, store, etc.)
-├── prisma/ # Prisma schema and DB config
-├── public/ # Static assets (images, fonts, etc.)
-├── styles/ # Global styles and Tailwind config
-├── types/ # Global TypeScript types
-├── utils/ # Helpers and utility functions
-├── .github/workflows/ # GitHub Actions CI/CD workflows
-├── .env, .env.local # Environment variables
-├── docker-compose.yml # Docker service configuration
-├── Dockerfile # Docker build config
-├── next.config.ts # Next.js config
-├── postcss.config.mjs # PostCSS plugins for Tailwind
-├── tailwind.config.ts # Tailwind CSS setup
-├── tsconfig.json # TypeScript compiler config
-└── README.md # Project documentation
+<pre> . ├── app/ # Next.js 14 App Router structure ├── components/ # Reusable UI components ├── constants/ # Global constants ├── lib/ # Logic utilities (e.g. API, auth, etc.) ├── prisma/ # Prisma schema and DB config ├── public/ # Static assets (images, fonts, etc.) ├── styles/ # Global styles and Tailwind config ├── types/ # Global TypeScript types ├── utils/ # Helpers and utility functions ├── .github/workflows/ # GitHub Actions CI/CD workflows ├── .env, .env.local # Environment variables ├── docker-compose.yml # Docker service configuration ├── Dockerfile # Docker build config ├── next.config.ts # Next.js config ├── postcss.config.mjs # PostCSS plugins for Tailwind ├── tailwind.config.ts # Tailwind CSS setup ├── tsconfig.json # TypeScript compiler config └── README.md # Project documentation </pre>
 
 ---
 

@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/Card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/Select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Bar,
     BarChart,
@@ -17,6 +17,7 @@ import {
     Tooltip,
     XAxis, YAxis
 } from "recharts";
+import EmptyDashboardInfo from "./EmptyDashboardInfo";
 
 export const salesData = [
     { name: 'Jan', sales: 4000, profit: 2400 },
@@ -44,127 +45,158 @@ export const revenueData = [
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
+
+
 export default function Dashboard() {
     const [period, setPeriod] = useState("month");
+    const [data, setData] = useState<typeof salesData>([]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchSalesData = (period: string) =>
+        new Promise<typeof salesData>((resolve) =>
+            setTimeout(() => {
+                resolve(salesData);
+                console.log(period);
+            }, 0)
+        );
+
+    useEffect(() => {
+        setLoading(true);
+        fetchSalesData(period).then((res) => {
+            /* setData(res); */
+            setData([]);
+            console.log(period, res);
+            setLoading(false);
+        });
+    }, [period]);
+    console.log(data.length === 0, data);
 
     return (
         <div className="p-6 space-y-6">
 
             <h1 className="text-2xl font-bold">📊 Analytics Dashboard</h1>
 
-            <div className="flex flex-wrap gap-4">
-                <Select value={period}
-                    onChange={setPeriod}
-                    options={["7 days", "month"]}>
-                    <SelectTrigger className="w-40">
-                        <SelectValue placeholder="Select period" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="today">Today</SelectItem>
-                        <SelectItem value="week">This Week</SelectItem>
-                        <SelectItem value="month">This Month</SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
+            {loading ? (
+                <p>Loading...</p>
+            ) : data.length === 0 ? (
+                <div className="text-gray-500">
+                    <EmptyDashboardInfo />
+                </div>
+            ) : (<>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card>
-                    <CardContent className="p-4">
-                        <p className="text-sm text-gray-500">Users</p>
-                        <p className="text-2xl font-semibold">1,245</p>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardContent className="p-4">
-                        <p className="text-sm text-gray-500">Revenue</p>
-                        <p className="text-2xl font-semibold">$4,900</p>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardContent className="p-4">
-                        <p className="text-sm text-gray-500">New Signups</p>
-                        <p className="text-2xl font-semibold">312</p>
-                    </CardContent>
-                </Card>
-                <Card>
-                    <CardContent className="p-4">
-                        <p className="text-sm text-gray-500">Sessions</p>
-                        <p className="text-2xl font-semibold">8,413</p>
-                    </CardContent>
-                </Card>
-            </div>
+                <div className="flex flex-wrap gap-4">
+                    <Select value={period}
+                        onChange={setPeriod}
+                        options={["7 days", "month"]}>
+                        <SelectTrigger className="w-40">
+                            <SelectValue placeholder="Select period" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="today">Today</SelectItem>
+                            <SelectItem value="week">This Week</SelectItem>
+                            <SelectItem value="month">This Month</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* LineChart */}
-                <Card>
-                    <CardContent className="h-80 mb-10">
-                        <h2 className="text-lg font-semibold mb-4">📈 Sales Over Time</h2>
-                        <ResponsiveContainer width="100%"
-                            height="100%">
-                            <LineChart data={salesData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Line type="monotone"
-                                    dataKey="sales"
-                                    stroke="#8884d8" />
-                                <Line type="monotone"
-                                    dataKey="profit"
-                                    stroke="#82ca9d" />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </CardContent>
-                </Card>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <Card>
+                        <CardContent className="p-4">
+                            <p className="text-sm text-gray-500">Users</p>
+                            <p className="text-2xl font-semibold">1,245</p>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent className="p-4">
+                            <p className="text-sm text-gray-500">Revenue</p>
+                            <p className="text-2xl font-semibold">$4,900</p>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent className="p-4">
+                            <p className="text-sm text-gray-500">New Signups</p>
+                            <p className="text-2xl font-semibold">312</p>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardContent className="p-4">
+                            <p className="text-sm text-gray-500">Sessions</p>
+                            <p className="text-2xl font-semibold">8,413</p>
+                        </CardContent>
+                    </Card>
+                </div>
 
-                {/* PieChart */}
-                <Card>
-                    <CardContent className="h-80 mb-10">
-                        <h2 className="text-lg font-semibold mb-4">🌐 Traffic Sources</h2>
-                        <ResponsiveContainer width="100%"
-                            height="100%">
-                            <PieChart>
-                                <Pie
-                                    data={trafficData}
-                                    dataKey="value"
-                                    nameKey="name"
-                                    cx="50%"
-                                    cy="50%"
-                                    outerRadius={80}
-                                    label
-                                >
-                                    {trafficData.map((_, index) => (
-                                        <Cell key={`cell-${index}`}
-                                            fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip />
-                                <Legend />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </CardContent>
-                </Card>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* LineChart */}
+                    <Card>
+                        <CardContent className="h-80 mb-10">
+                            <h2 className="text-lg font-semibold mb-4">📈 Sales Over Time</h2>
+                            <ResponsiveContainer width="100%"
+                                height="100%">
+                                <LineChart data={salesData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line type="monotone"
+                                        dataKey="sales"
+                                        stroke="#8884d8" />
+                                    <Line type="monotone"
+                                        dataKey="profit"
+                                        stroke="#82ca9d" />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
 
-                {/* BarChart */}
-                <Card>
-                    <CardContent className="h-80 mb-10">
-                        <h2 className="text-lg font-semibold mb-4">💰 Revenue per Product</h2>
-                        <ResponsiveContainer width="100%"
-                            height="100%">
-                            <BarChart data={revenueData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="revenue"
-                                    fill="#8884d8" />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </CardContent>
-                </Card>
-            </div>
+                    {/* PieChart */}
+                    <Card>
+                        <CardContent className="h-80 mb-10">
+                            <h2 className="text-lg font-semibold mb-4">🌐 Traffic Sources</h2>
+                            <ResponsiveContainer width="100%"
+                                height="100%">
+                                <PieChart>
+                                    <Pie
+                                        data={trafficData}
+                                        dataKey="value"
+                                        nameKey="name"
+                                        cx="50%"
+                                        cy="50%"
+                                        outerRadius={80}
+                                        label
+                                    >
+                                        {trafficData.map((_, index) => (
+                                            <Cell key={`cell-${index}`}
+                                                fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip />
+                                    <Legend />
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+
+                    {/* BarChart */}
+                    <Card>
+                        <CardContent className="h-80 mb-10">
+                            <h2 className="text-lg font-semibold mb-4">💰 Revenue per Product</h2>
+                            <ResponsiveContainer width="100%"
+                                height="100%">
+                                <BarChart data={revenueData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="revenue"
+                                        fill="#8884d8" />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </CardContent>
+                    </Card>
+                </div></>)}
         </div>
     );
 }
