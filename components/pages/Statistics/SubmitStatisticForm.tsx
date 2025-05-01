@@ -68,10 +68,11 @@ export default function SubmitStatisticForm() {
                 />
             </div>
             {error && <p className="text-red-500">{error}</p>}
+
             <Button
                 type="submit"
                 title={isSubmitting ? "Saving..." : "Save"}
-                className="btn w-fit bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+                className="btn btn-primary w-fit py-2 px-4 rounded transition"
                 disabled={isSubmitting}
             />
         </form>

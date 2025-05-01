@@ -9,14 +9,13 @@ interface IProps {
 }
 
 export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: IProps) {
-    const pathname = usePathname();
-
     const links = [
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/transactions', label: 'Transactions' },
         { href: '/budgets', label: 'Budgets' },
         { href: '/statistics', label: 'Statistics' },
     ];
+    const pathname = usePathname();
 
     return (
         <>
@@ -52,8 +51,8 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed }: I
                                 key={href}
                                 href={href}
                                 className={`transition-colors ${pathname === href
-                                        ? 'text-[var(--color-brand)] dark:text-[var(--color-dark-brand)] font-semibold'
-                                        : 'text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] hover:text-[var(--color-brand)] dark:hover:text-[var(--color-dark-brand)]'
+                                    ? 'text-[var(--color-brand)] dark:text-[var(--color-dark-brand)] font-semibold'
+                                    : 'text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] hover:text-[var(--color-brand)] dark:hover:text-[var(--color-dark-brand)]'
                                     }`}
                             >
                                 {label}

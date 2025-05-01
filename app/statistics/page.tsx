@@ -10,7 +10,7 @@ export default async function StatisticsPage() {
                     <h1 className="text-2xl font-bold mb-2">Statistics</h1>
                     <Link
                         href="/statistics/data-entry"
-                        className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        className="btn-primary inline-block px-4 py-2 rounded "
                     >
                         Add New Entry
                     </Link>
