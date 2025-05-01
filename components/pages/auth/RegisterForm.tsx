@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/buttons/Button";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -10,6 +10,7 @@ export default function RegisterPage() {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [error, setError] = useState("");
+    const nameRef = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -38,6 +39,10 @@ export default function RegisterPage() {
         router.push("/auth/login");
     };
 
+    useEffect(() => {
+        nameRef.current?.focus();
+    }, []);
+
     return (
         <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-background p-4">
             <form onSubmit={handleSubmit}
@@ -47,6 +52,7 @@ export default function RegisterPage() {
                     <label htmlFor="name"
                         className="block mb-1">Name</label>
                     <input
+                        ref={nameRef}
                         type="text"
                         id="name"
                         value={name}

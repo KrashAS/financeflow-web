@@ -5,13 +5,14 @@ import { storage } from "@/utils/storage";
 import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const emailRef = useRef<HTMLInputElement>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -43,6 +44,10 @@ export default function LoginPage() {
         }
     };
 
+    useEffect(() => {
+        emailRef.current?.focus();
+    }, []);
+
     return (
         <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-background p-4">
             <form onSubmit={handleSubmit}
@@ -52,6 +57,7 @@ export default function LoginPage() {
                     <label htmlFor="email"
                         className="block mb-1">Email</label>
                     <input
+                        ref={emailRef}
                         type="email"
                         id="email"
                         value={email}
