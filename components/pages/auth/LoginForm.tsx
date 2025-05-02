@@ -29,7 +29,6 @@ export default function LoginPage() {
         } else {
             const session = await getSession();
             const user = session?.user;
-            console.log("session", session);
 
             if (user) {
                 storage.setItem("user", {
