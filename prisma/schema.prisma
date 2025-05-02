@@ -22,3 +22,24 @@ model Budget {
   createdAt DateTime @default(now())
   userId    String
 }
+
+model ExpenseCategory {
+  id        Int      @id @default(autoincrement())
+  name      String
+  color     String
+  userId    String
+  createdAt DateTime  @default(now())
+
+  expenses  Expense[]
+}
+
+model Expense {
+  id             Int      @id @default(autoincrement())
+  title          String
+  amount         Float
+  userId         String
+  createdAt      DateTime @default(now())
+  
+  categoryId     Int
+  category       ExpenseCategory @relation(fields: [categoryId], references: [id])
+}
