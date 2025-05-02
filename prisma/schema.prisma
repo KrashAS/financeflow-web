@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Statistic {
-  id          Int      @id @default(autoincrement())
-  userId      String
-  type        String
-  amount      Float
-  createdAt   DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  userId    String
+  type      String
+  amount    Float
+  createdAt DateTime @default(now())
 }
 
 model Budget {
@@ -20,4 +20,5 @@ model Budget {
   title     String
   amount    Float
   createdAt DateTime @default(now())
+  userId    String
 }
