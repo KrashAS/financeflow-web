@@ -16,6 +16,8 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed, ins
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/transactions', label: 'Transactions' },
         { href: '/budgets', label: 'Budgets' },
+        { href: '/expenses', label: 'Expenses' },
+        { href: '/expense-categories', label: 'Categories' },
         { href: '/statistics', label: 'Statistics' },
     ];
     const pathname = usePathname();

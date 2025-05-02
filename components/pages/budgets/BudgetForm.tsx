@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/buttons/Button";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -63,14 +64,20 @@ export default function BudgetForm() {
                     required
                 />
             </div>
-
-            <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn btn-primary font-medium px-4 py-2 rounded"
-                title={isSubmitting ? "Saving..." : "Create Budget"}
-            />
-
+            <div className="flex justify-between">
+                <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn btn-primary font-medium px-4 py-2 rounded"
+                    title={isSubmitting ? "Saving..." : "Create Budget"}
+                />
+                <Link
+                    href="/budgets"
+                    className="btn-secondary inline-block px-4 py-2 rounded"
+                >
+                    Back
+                </Link>
+            </div>
         </form>
     );
 }
