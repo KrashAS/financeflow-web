@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model UserSetting {
+  id       Int    @id @default(autoincrement())
+  userId   String @unique
+  currency String @default("USD")
+}
+
 model Statistic {
   id        Int      @id @default(autoincrement())
   userId    String
@@ -19,6 +25,7 @@ model Budget {
   id        Int      @id @default(autoincrement())
   title     String
   amount    Float
+  currency  String   @default("USD")
   createdAt DateTime @default(now())
   userId    String
 }

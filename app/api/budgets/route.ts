@@ -10,19 +10,26 @@ export async function POST(req: NextRequest) {
     }
 
     const userId = session.user.uid;
-
     const { title, amount } = await req.json();
+
     if (!title || typeof amount !== "number" || amount <= 0) {
         return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
 
     try {
-        const newBudget = await prisma.budget.create({
-            data: { title, amount, userId },
+        const setting = await prisma.userSetting.findUnique({
+            where: { userId },
         });
+
+        const currency = setting?.currency ?? "USD";
+
+        const newBudget = await prisma.budget.create({
+            data: { title, amount, userId, currency },
+        });
+
         return NextResponse.json(newBudget, { status: 201 });
     } catch (err) {
-        console.error(err);
+        console.error("Create Budget Error:", err);
         return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
 }

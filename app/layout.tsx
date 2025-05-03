@@ -39,8 +39,9 @@ export default function RootLayout({
                         <Header />
                     </SessionProviderWrapper>
                     <PopupsContainer />
+
+                    {children}
                 </StoreProvider>
-                {children}
             </body>
         </html>
     );

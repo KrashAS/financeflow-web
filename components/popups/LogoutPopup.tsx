@@ -20,6 +20,7 @@ export const LogoutPopup = () => {
     const handleLogout = async () => {
         await signOut({ redirect: false })
         storage.removeItem("user");
+        storage.removeItem("selectedCurrency");
         handleClose();
         router.push('/auth/login');
     };

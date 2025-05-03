@@ -65,11 +65,10 @@ export default function Dashboard() {
         fetchSalesData(period).then((res) => {
             /* setData(res); */
             setData([]);
-            console.log(period, res);
+            console.log("Dashboard", period, res);
             setLoading(false);
         });
     }, [period]);
-    console.log(data.length === 0, data);
 
     return (
         <div className="p-6 space-y-6">

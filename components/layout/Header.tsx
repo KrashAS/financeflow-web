@@ -76,7 +76,7 @@ export default function Header() {
                             Hi, {name}!
                         </div>
                     )}
-                    <DropdownCurrency />
+                    {session && <DropdownCurrency />}
                     <ThemeToggle />
 
                 </div>
