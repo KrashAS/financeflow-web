@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { usePathname, } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '../ui/buttons/Button';
+import DropdownCurrency from '../ui/dropdowns/DropdownCurrency';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import Sidebar from './Sidebar';
 
@@ -37,46 +38,48 @@ export default function Header() {
                 <div className="text-xl font-bold text-[color:var(--color-brand)] dark:text-[color:var(--color-dark-brand)]">
                     <Link href="/">FinanceFlow</Link>
                 </div>
+                <div className='flex space-x-4 items-center relative'>
+                    <nav className="space-x-4 flex items-center">
 
-                <nav className="space-x-4 flex items-center">
-                    <Link
-                        href="/"
-                        onClick={closeSidebar}
-                        className="nav-link hidden sm:block"
-                    >
-                        Home
-                    </Link>
-                    {session ? (
-                        <>
-                            <Button
-                                ref={menuButtonRef}
-                                onClickButton={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                                className="btn nav-btn"
-                                title='Menu' />
+                        {session ? (
+                            <>
+                                <Button
+                                    ref={menuButtonRef}
+                                    onClickButton={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                                    className="btn nav-btn hidden xs:block"
+                                    title='Menu' />
 
+                                <Link
+                                    href="/dashboard"
+                                    className="nav-link hidden sm:block"
+                                >
+                                    Dashboard
+                                </Link>
+                                <Button
+                                    onClickButton={logoutClick}
+                                    className="btn nav-btn hidden xs:block"
+                                    title='Logout'
+                                />
+                            </>
+                        ) : (
                             <Link
-                                href="/dashboard"
-                                className="nav-link hidden sm:block"
+                                href="/auth/login"
+                                className="nav-link"
                             >
-                                Dashboard
+                                Login
                             </Link>
-                            <Button
-                                onClickButton={logoutClick}
-                                className="btn nav-btn"
-                                title='Logout'
-                            />
-                        </>
-                    ) : (
-                        <Link
-                            href="/auth/login"
-                            className="nav-link"
-                        >
-                            Login
-                        </Link>
-                    )}
+                        )}
 
+                    </nav>
+                    {name && (
+                        <div className="absolute -z-1 top-[64px] -right-4 px-4 py-1 rounded-full bg-gradient-to-r from-sky-200 via-teal-100 to-lime-200 text-gray-800 font-medium text-sm shadow-md">
+                            Hi, {name}!
+                        </div>
+                    )}
+                    <DropdownCurrency />
                     <ThemeToggle />
-                </nav>
+
+                </div>
             </div>
 
             {session &&
@@ -85,12 +88,6 @@ export default function Header() {
                     insideRef={menuButtonRef}
                 />
             }
-
-            {name && (
-                <div className="fixed z-60 top-19 right-2 px-4 py-1 rounded-full bg-gradient-to-r from-sky-200 via-teal-100 to-lime-200 text-gray-800 font-medium text-sm shadow-md">
-                    Hi, {name}!
-                </div>
-            )}
         </header>
     );
 }
