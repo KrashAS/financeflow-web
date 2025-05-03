@@ -3,6 +3,10 @@
 @import "../styles/global.scss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+    --breakpoint-xs: 30rem;
+}
+
 @theme inline {
     --font-sans: var(--font-geist-sans);
     /* --font-mono: var(--font-geist-mono); */

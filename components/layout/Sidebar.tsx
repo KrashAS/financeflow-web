@@ -1,9 +1,13 @@
 'use client';
 
+import { POPUP_NAMES } from '@/constants/popupNames';
 import useOnClickOutside from '@/lib/hooks/useOnClickOutside';
+import { useAppDispatch } from '@/lib/hooks/useRedux';
+import { openPopup } from '@/lib/redux/features/popup/popupSlice';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { RefObject, useRef } from 'react';
+import { Button } from '../ui/buttons/Button';
 
 interface IProps {
     isSidebarCollapsed: boolean;
@@ -13,6 +17,7 @@ interface IProps {
 
 export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed, insideRef }: IProps) {
     const links = [
+        { href: '/', label: 'Home' },
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/transactions', label: 'Transactions' },
         { href: '/budgets', label: 'Budgets' },
@@ -21,6 +26,7 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed, ins
         { href: '/statistics', label: 'Statistics' },
     ];
     const pathname = usePathname();
+    const dispatch = useAppDispatch();
     const sidebarRef = useRef<HTMLDivElement>(null);
     const toggleBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -29,6 +35,10 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed, ins
     }, {
         ignoreRefs: [toggleBtnRef, insideRef],
     });
+
+    const logoutClick = () => {
+        dispatch(openPopup(POPUP_NAMES.LOGOUT));
+    };
 
     return (
         <>
@@ -73,6 +83,11 @@ export default function Sidebar({ isSidebarCollapsed, setIsSidebarCollapsed, ins
                                 {label}
                             </Link>
                         ))}
+                        <Button
+                            onClickButton={logoutClick}
+                            className="btn nav-btn text-left"
+                            title='Logout'
+                        />
                     </nav>
                 </div>
             </aside>
