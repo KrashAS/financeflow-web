@@ -1,31 +1,64 @@
-
 "use client";
 
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
+import { setCurrency } from "@/lib/redux/features/currency/currencySlice";
+import { AppDispatch } from "@/lib/redux/store";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const LOCAL_STORAGE_KEY = "selectedCurrency";
 
 const DropdownCurrency = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedCurrency, setSelectedCurrency] = useState(DEFAULT_CURRENCY);
+    const [selectedCurrency, setSelectedCurrencyState] = useState(DEFAULT_CURRENCY);
+    const dispatch = useDispatch<AppDispatch>();
+    const router = useRouter()
 
     useEffect(() => {
-        const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-        if (saved) {
-            setSelectedCurrency(saved);
-        }
-    }, []);
+        const fetchCurrency = async () => {
+            try {
+                const res = await fetch("/api/settings/currency");
+                const data = await res.json();
+
+                const code = data.currency || DEFAULT_CURRENCY;
+
+                setSelectedCurrencyState(code);
+                dispatch(setCurrency(code));
+                router.refresh()
+                localStorage.setItem(LOCAL_STORAGE_KEY, code);
+            } catch (error) {
+                console.error("Failed to fetch currency:", error);
+            }
+        };
+
+        fetchCurrency();
+    }, [dispatch, router]);
 
     const toggleDropdown = () => setIsOpen(prev => !prev);
 
-    const handleSelect = (code: string) => {
-        setSelectedCurrency(code);
-        localStorage.setItem(LOCAL_STORAGE_KEY, code);
-        setIsOpen(false);
+    const handleSelect = async (code: string) => {
+        try {
+            const res = await fetch('/api/settings/currency', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currency: code }),
+            });
+            if (!res.ok) {
+                console.error('Failed to update currency', await res.text());
+            } else {
+                setSelectedCurrencyState(code);
+                dispatch(setCurrency(code));
+                localStorage.setItem(LOCAL_STORAGE_KEY, code);
+                setIsOpen(false);
+                router.refresh()
+            }
+        } catch (err) {
+            console.error('Error updating currency:', err);
+        }
     };
 
-    const selected = CURRENCIES.find(c => c.code === selectedCurrency);
+    const selected = CURRENCIES.find(c => c.code === selectedCurrency) || { symbol: '', code: '' };
 
     return (
         <div className="relative inline-block text-left">
