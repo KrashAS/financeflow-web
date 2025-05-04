@@ -150,7 +150,7 @@ export default function ExpenseMultiForm({ categories, currency }: Props) {
                 />
                 <Link
                     href="/expenses"
-                    className="btn-secondary inline-block px-4 py-2 rounded"
+                    className="btn-secondary font-medium inline-block px-4 py-2 rounded"
                 >
                     Back
                 </Link>
