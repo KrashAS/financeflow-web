@@ -38,6 +38,7 @@
 
 ## 📁 Project Structure
 
+```
 ├── app/ # Next.js 14 App Router structure
 ├── components/ # Reusable UI components
 ├── constants/ # Global constants
@@ -56,6 +57,7 @@
 ├── tailwind.config.ts # Tailwind CSS setup
 ├── tsconfig.json # TypeScript compiler config
 └── README.md # Project documentation
+```
 
 ---
 
