@@ -1,5 +1,7 @@
 "use client";
 
+import { CURRENCIES } from "@/constants/currencies";
+
 interface Category {
     id: number;
     name: string;
@@ -10,6 +12,7 @@ interface Expense {
     id: number;
     title: string;
     amount: number;
+    currency: string;
     createdAt: string;
     category: Category;
 }
@@ -43,27 +46,30 @@ export default function ExpenseListTable({ expenses }: Props) {
                     </tr>
                 </thead>
                 <tbody className="bg-white dark:bg-[var(--color-dark-bg)] divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)]">
-                    {expenses.map((expense) => (
-                        <tr key={expense.id}
-                            className="hover:bg-gray-50 dark:hover:bg-[var(--color-dark-border-default)]">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-dark-foreground)]">
-                                {expense.title}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)]">
-                                ${expense.amount.toFixed(2)}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)] flex items-center gap-2">
-                                <span
-                                    className="inline-block w-3 h-3 rounded-full"
-                                    style={{ backgroundColor: expense.category.color }}
-                                ></span>
-                                {expense.category.name}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]">
-                                {expense.createdAt}
-                            </td>
-                        </tr>
-                    ))}
+                    {expenses.map((expense) => {
+                        const symbol = CURRENCIES.find(c => c.code === expense.currency)?.symbol || '';
+                        return (
+                            <tr key={expense.id}
+                                className="hover:bg-gray-50 dark:hover:bg-[var(--color-dark-border-default)]">
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-dark-foreground)]">
+                                    {expense.title}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)]">
+                                    {`${expense.amount.toFixed(2)} (${expense.currency}, ${symbol})`}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)] flex items-center gap-2">
+                                    <span
+                                        className="inline-block w-3 h-3 rounded-full"
+                                        style={{ backgroundColor: expense.category.color }}
+                                    ></span>
+                                    {expense.category.name}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]">
+                                    {expense.createdAt}
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
         </div>

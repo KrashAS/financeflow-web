@@ -41,12 +41,13 @@ model ExpenseCategory {
 }
 
 model Expense {
-  id             Int      @id @default(autoincrement())
-  title          String
-  amount         Float
-  userId         String
-  createdAt      DateTime @default(now())
-  
-  categoryId     Int
-  category       ExpenseCategory @relation(fields: [categoryId], references: [id])
+  id         Int      @id @default(autoincrement())
+  title      String
+  amount     Float
+  currency   String @default("USD")  
+  userId     String
+  createdAt  DateTime @default(now())
+
+  categoryId Int
+  category   ExpenseCategory @relation(fields: [categoryId], references: [id])
 }

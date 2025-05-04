@@ -13,6 +13,7 @@ interface Category {
 
 interface Props {
     categories: Category[];
+    currency: string;
 }
 
 interface ExpenseInput {
@@ -20,7 +21,7 @@ interface ExpenseInput {
     amount: string;
 }
 
-export default function ExpenseMultiForm({ categories }: Props) {
+export default function ExpenseMultiForm({ categories, currency }: Props) {
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
     const [inputs, setInputs] = useState<Record<number, ExpenseInput>>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,6 +55,7 @@ export default function ExpenseMultiForm({ categories }: Props) {
                 title: e.title.trim(),
                 amount: parseFloat(e.amount),
                 categoryId: e.categoryId,
+                currency,
             }));
 
         if (!payload.length) return alert("Please fill in at least one expense");
@@ -127,7 +129,7 @@ export default function ExpenseMultiForm({ categories }: Props) {
                                 />
                                 <input
                                     type="number"
-                                    placeholder="Amount"
+                                    placeholder={`Amount (${currency})`}
                                     value={value.amount ?? ""}
                                     onChange={(e) => handleInputChange(id, "amount", e.target.value)}
                                     className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"

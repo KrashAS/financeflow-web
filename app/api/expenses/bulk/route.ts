@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
                 title: e.title,
                 amount: e.amount,
                 categoryId: e.categoryId,
+                currency: e.currency,
                 userId: session.user.uid,
             }));
 

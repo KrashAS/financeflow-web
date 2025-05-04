@@ -47,7 +47,7 @@ export default function BudgetForm() {
     return (
         <form
             onSubmit={handleSubmit}
-            className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-8 rounded-xl shadow-md w-full max-w-md space-y-6"
+            className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-8 rounded-xl shadow-md w-full space-y-6"
         >
             <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-[color:var(--color-dark-text-gray)] mb-1">Budget Name</label>
