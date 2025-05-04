@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/buttons/Button";
+import Input from "@/components/ui/inputs/Input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -37,21 +38,16 @@ export default function ExpenseCategoryForm() {
             onSubmit={handleSubmit}
             className="bg-white dark:bg-[var(--color-dark-bg)] border border-[var(--color-border-default)] dark:border-[var(--color-dark-border-default)] p-6 rounded-xl shadow-md space-y-4"
         >
+            <Input type="text"
+                id="category-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                label="Budget Name"
+                placeholder="Enter category"
+                isFocused={true}
+                required />
             <div>
-                <label className="block text-sm font-medium text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] mb-1">
-                    Category Name
-                </label>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)]"
-                    placeholder="Enter category"
-                    required
-                />
-            </div>
-            <div>
-                <label className="block text-sm font-medium text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] mb-1">
+                <label className="block mb-1 w-fit">
                     Category Color
                 </label>
                 <input
@@ -70,7 +66,7 @@ export default function ExpenseCategoryForm() {
                 />
                 <Link
                     href="/expense-categories"
-                    className="btn-secondary inline-block px-4 py-2 rounded"
+                    className="btn-secondary font-medium inline-block px-4 py-2 rounded"
                 >
                     Back
                 </Link>
