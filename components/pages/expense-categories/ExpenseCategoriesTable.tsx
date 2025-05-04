@@ -17,7 +17,7 @@ export default function ExpenseCategoriesTable({ categories }: Props) {
 
     return (
         <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)] bg-[var(--color-bg)] dark:bg-[var(--color-dark-bg)] shadow rounded-xl">
+            <table className="min-w-full divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)] bg-[var(--color-bg)] dark:bg-[var(--color-dark-bg)] rounded-md overflow-hidden">
                 <thead className="bg-gray-100 dark:bg-[var(--color-dark-bg)]">
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-semibold text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider">

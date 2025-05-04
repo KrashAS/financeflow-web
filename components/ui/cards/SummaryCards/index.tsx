@@ -19,7 +19,7 @@ const SummaryCards = ({ symbol, totalBudget, totalExpenses, balance }: IProps) =
             <div className="p-4 rounded-lg bg-red-100 dark:bg-red-900">
                 <p className="text-sm font-medium text-red-800 dark:text-red-200">Total Expenses</p>
                 <p className="text-xl font-semibold text-red-900 dark:text-red-100">
-                    {`-${symbol} ${totalExpenses.toFixed(2)}`}
+                    {`${symbol} ${totalExpenses.toFixed(2)}`}
                 </p>
             </div>
 

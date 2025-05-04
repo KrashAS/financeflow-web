@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/buttons/Button";
+import InputPassword from "@/components/ui/inputs/InputPassword";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -76,17 +77,10 @@ export default function RegisterPage() {
                     />
                 </div>
                 <div className="mb-6">
-                    <label className="block mb-1"
-                        htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
+                    <InputPassword id="password"
+                        label="Password"
                         value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        autoComplete="current-password"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
-                    />
+                        onChange={value => setPassword(value)} />
                 </div>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <Button type="submit"

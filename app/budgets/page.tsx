@@ -1,5 +1,5 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
-import BudgetsList from "@/components/pages/budgets/BudgetsList";
+import BudgetsList from "@/components/pages/budgets/BudgetsListTable";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
 import { formatDate } from "@/lib/formatDate";
