@@ -38,7 +38,24 @@
 
 ## 📁 Project Structure
 
-<pre> . ├── app/ # Next.js 14 App Router structure ├── components/ # Reusable UI components ├── constants/ # Global constants ├── lib/ # Logic utilities (e.g. API, auth, etc.) ├── prisma/ # Prisma schema and DB config ├── public/ # Static assets (images, fonts, etc.) ├── styles/ # Global styles and Tailwind config ├── types/ # Global TypeScript types ├── utils/ # Helpers and utility functions ├── .github/workflows/ # GitHub Actions CI/CD workflows ├── .env, .env.local # Environment variables ├── docker-compose.yml # Docker service configuration ├── Dockerfile # Docker build config ├── next.config.ts # Next.js config ├── postcss.config.mjs # PostCSS plugins for Tailwind ├── tailwind.config.ts # Tailwind CSS setup ├── tsconfig.json # TypeScript compiler config └── README.md # Project documentation </pre>
+├── app/ # Next.js 14 App Router structure
+├── components/ # Reusable UI components
+├── constants/ # Global constants
+├── lib/ # Logic utilities (e.g. API, auth, etc.)
+├── prisma/ # Prisma schema and DB config
+├── public/ # Static assets (images, fonts, etc.)
+├── styles/ # Global styles and Tailwind config
+├── types/ # Global TypeScript types
+├── utils/ # Helpers and utility functions
+├── .github/workflows/ # GitHub Actions CI/CD workflows
+├── .env, .env.local # Environment variables
+├── docker-compose.yml # Docker service configuration
+├── Dockerfile # Docker build config
+├── next.config.ts # Next.js config
+├── postcss.config.mjs # PostCSS plugins for Tailwind
+├── tailwind.config.ts # Tailwind CSS setup
+├── tsconfig.json # TypeScript compiler config
+└── README.md # Project documentation
 
 ---
 
