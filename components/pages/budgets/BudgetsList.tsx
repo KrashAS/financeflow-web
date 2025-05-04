@@ -1,15 +1,6 @@
 "use client";
 
-
-
-
-interface Budget {
-    id: string;
-    name: string;
-    amount: number;
-    createdAt: string;
-    currencySymbol: string;
-}
+import { Budget } from "@/types/budget";
 
 interface BudgetsListProps {
     budgets: Budget[];
@@ -20,17 +11,10 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
         return <p className="text-gray-500 dark:text-[var(--color-dark-text-muted)]">No budgets yet.</p>;
     }
 
-    const total = budgets.reduce((sum, b) => sum + b.amount, 0).toFixed(2);
     const currencySymbol = budgets[0]?.currencySymbol || "";
-    console.log(budgets[0]?.currencySymbol);
 
     return (
         <div className="overflow-x-auto ">
-            {budgets && (
-                <p className="mb-4 text-sm text-gray-600 dark:text-[var(--color-dark-text-muted)]">
-                    Total: {total} {currencySymbol}
-                </p>
-            )}
             <table className="min-w-full divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)] bg-[var(--color-bg)] dark:bg-[var(--color-dark-bg)] overflow-hidden rounded-xl">
                 <thead className="bg-gray-100 dark:bg-[var(--color-dark-bg)]">
                     <tr>
@@ -55,7 +39,7 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
                                 {budget.name}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)] text-right">
-                                {budget.amount.toFixed(2)} {currencySymbol}
+                                {`${budget.amount.toFixed(2)} ${currencySymbol}`}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]">
                                 {budget.createdAt}
