@@ -1,20 +1,21 @@
 "use client";
 
 import { Button } from "@/components/ui/buttons/Button";
+import InputEmail from "@/components/ui/inputs/InputEmail";
 import InputPassword from "@/components/ui/inputs/InputPassword";
 
 import { storage } from "@/utils/storage";
 import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const emailRef = useRef<HTMLInputElement>(null);
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -45,9 +46,7 @@ export default function LoginPage() {
         }
     };
 
-    useEffect(() => {
-        emailRef.current?.focus();
-    }, []);
+
 
     return (
         <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-background p-4">
@@ -55,24 +54,17 @@ export default function LoginPage() {
                 className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
                 <div className="mb-4">
-                    <label htmlFor="email"
-                        className="block mb-1">Email</label>
-                    <input
-                        ref={emailRef}
-                        type="email"
-                        id="email"
+                    <InputEmail id="email"
+                        label="Email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        autoComplete="email"
-                        required
-                        className="w-full px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
-                    />
+                        onChange={setEmail}
+                        isFocused={true} />
                 </div>
                 <div className="mb-6">
                     <InputPassword id="password"
                         label="Password"
                         value={password}
-                        onChange={value => setPassword(value)} />
+                        onChange={setPassword} />
                 </div>
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <Button type="submit"

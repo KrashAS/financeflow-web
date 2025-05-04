@@ -20,7 +20,7 @@ export default function InputPassword({
     return (
         <div className="relative w-full">
             <label htmlFor={id}
-                className="block mb-1">
+                className="block mb-1 w-fit">
                 {label}
             </label>
             <input
@@ -30,7 +30,7 @@ export default function InputPassword({
                 onChange={(e) => onChange(e.target.value)}
                 autoComplete="current-password"
                 required
-                className="w-full pr-10 px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800 transition-colors duration-200 focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
+                className="w-full pr-10 px-4 py-2 border border-gray-300 dark:border-transparent rounded-md bg-[var(--color-bg)] dark:bg-gray-800  focus:border-[var(--color-brand)] dark:focus:border-[var(--color-dark-brand)] focus:ring-2 focus:ring-[var(--color-brand)] dark:focus:ring-[var(--color-dark-brand)] focus:outline-none"
             />
             <button
                 type="button"
