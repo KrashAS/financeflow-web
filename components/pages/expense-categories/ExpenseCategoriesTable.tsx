@@ -1,10 +1,6 @@
 "use client";
 
-interface Category {
-    id: number;
-    name: string;
-    color: string;
-}
+import { Category } from "@/types/category";
 
 interface Props {
     categories: Category[];
