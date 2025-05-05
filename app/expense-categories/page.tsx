@@ -22,9 +22,9 @@ export default async function ExpenseCategoriesPage() {
                     <Link
                         href="/expense-categories/new"
                         className="btn btn-primary px-4 py-2 rounded-md"
-                        title="+ Add Category"
                     >
-                        + Add Category
+                        <span className="xs:hidden text-lg">＋</span>
+                        <span className="hidden xs:inline">+ Add Category</span>
                     </Link>
                 </div>
 
