@@ -1,15 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/buttons/Button";
+import { Category } from "@/types/category";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-interface Category {
-    id: number;
-    name: string;
-    color: string;
-}
 
 interface Props {
     categories: Category[];

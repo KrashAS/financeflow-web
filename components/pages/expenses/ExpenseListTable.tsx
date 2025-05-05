@@ -1,21 +1,7 @@
 "use client";
 
 import { CURRENCIES } from "@/constants/currencies";
-
-interface Category {
-    id: number;
-    name: string;
-    color: string;
-}
-
-interface Expense {
-    id: number;
-    title: string;
-    amount: number;
-    currency: string;
-    createdAt: string;
-    category: Category;
-}
+import { Expense } from "@/types/expense";
 
 interface Props {
     expenses: Expense[];

@@ -1,12 +1,5 @@
+import { Transaction } from "@/types/transaction";
 import TransactionItem from "./TransactionItem";
-
-interface Transaction {
-    id: number;
-    userId: string;
-    type: "income" | "expense";
-    amount: number;
-    createdAt: string;
-}
 
 interface TransactionsListProps {
     transactions: Transaction[];

@@ -1,10 +1,4 @@
-interface Transaction {
-    id: number;
-    userId: string;
-    type: "income" | "expense";
-    amount: number;
-    createdAt: string;
-}
+import { Transaction } from "@/types/transaction";
 
 interface TransactionItemProps {
     transaction: Transaction;
