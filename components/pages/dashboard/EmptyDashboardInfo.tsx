@@ -16,7 +16,7 @@ const EmptyDashboardInfo = () => {
                 href="/budgets/new"
                 className="inline-block px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
             >
-                ➕ Create Budget
+                Create Budget
             </Link>
         </div>
     )
