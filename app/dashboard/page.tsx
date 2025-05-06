@@ -1,10 +1,10 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
-import EmptyDashboardInfo from "@/components/pages/dashboard/EmptyDashboardInfo";
-import ExpensesBarChart from "@/components/pages/dashboard/ExpensesBarChart";
-import ExpensesLineChart from "@/components/pages/dashboard/ExpensesLineChart";
-import ExpensesPieChart from "@/components/pages/dashboard/ExpensesPieChart";
-import LastRecordsPanel from "@/components/pages/dashboard/LastRecordsPanel";
+import EmptyDashboardInfo from "@/components/pages/dashboard_temp/EmptyDashboardInfo";
+import ExpensesBarChart from "@/components/pages/dashboard_temp/ExpensesBarChart";
+import ExpensesLineChart from "@/components/pages/dashboard_temp/ExpensesLineChart";
+import ExpensesPieChart from "@/components/pages/dashboard_temp/ExpensesPieChart";
+import LastRecordsPanel from "@/components/pages/dashboard_temp/LastRecordsPanel";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { DEFAULT_CURRENCY } from "@/constants/currencies";
 import { prisma } from "@/lib/prisma";
