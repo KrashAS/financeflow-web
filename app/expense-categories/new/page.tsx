@@ -1,8 +1,13 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import WrapperForPage from "@/components/layout/WrapperForPage";
+import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseCategoryForm from "@/components/pages/expense-categories/ExpenseCategoryForm";
+import { getServerSession } from "next-auth";
 
 
-export default function NewExpenseCategoryPage() {
+export default async function NewExpenseCategoryPage() {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) return <UnauthorizedMessage />;
     return (
         <WrapperForPage>
             <div className="p-6 max-w-xl mx-auto">

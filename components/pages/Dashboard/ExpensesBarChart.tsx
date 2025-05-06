@@ -79,7 +79,7 @@ export default function ExpensesBarChart({
                         }}
                     />
                     <Bar dataKey="value"
-                        fill="var(--color-brand)"
+                        fill="#f87171"
                         radius={[4, 4, 0, 0]} />
                 </BarChart>
             </ResponsiveContainer>

@@ -1,8 +1,13 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
+import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import Statistics from "@/components/pages/Statistics";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 export default async function StatisticsPage() {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) return <UnauthorizedMessage />;
     return (
         <WrapperForPage>
             <div className="p-6">

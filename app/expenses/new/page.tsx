@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import WrapperForPage from "@/components/layout/WrapperForPage";
+import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseMultiForm from "@/components/pages/expenses/ExpenseMultiForm";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
@@ -9,7 +10,7 @@ import Link from "next/link";
 
 export default async function NewExpensePage() {
     const session = await getServerSession(authOptions);
-    if (!session?.user) return null;
+    if (!session?.user) return <UnauthorizedMessage />;
 
     const userId = session.user.uid;
     const setting = await prisma.userSetting.findUnique({ where: { userId } });

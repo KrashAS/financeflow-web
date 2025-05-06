@@ -1,7 +1,10 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
-import ExpensesBarChart from "@/components/pages/Dashboard/ExpensesBarChart";
-import ExpensesLineChart from "@/components/pages/Dashboard/ExpensesLineChart";
-import ExpensesPieChart from "@/components/pages/Dashboard/ExpensesPieChart";
+import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
+import EmptyDashboardInfo from "@/components/pages/dashboard/EmptyDashboardInfo";
+import ExpensesBarChart from "@/components/pages/dashboard/ExpensesBarChart";
+import ExpensesLineChart from "@/components/pages/dashboard/ExpensesLineChart";
+import ExpensesPieChart from "@/components/pages/dashboard/ExpensesPieChart";
+import LastRecordsPanel from "@/components/pages/dashboard/LastRecordsPanel";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { DEFAULT_CURRENCY } from "@/constants/currencies";
 import { prisma } from "@/lib/prisma";
@@ -9,12 +12,11 @@ import { getDashboardData } from "@/utils/getDashboardData";
 import { getExpenseTrends } from "@/utils/getExpenseTrends";
 import { startOfMonth, subMonths } from "date-fns";
 import { getServerSession } from "next-auth";
-import Link from "next/link";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
-    if (!session?.user) return null;
+    if (!session?.user) return <UnauthorizedMessage />;
 
     const data = await getDashboardData();
     if (!data) return null;
@@ -56,6 +58,8 @@ export default async function DashboardPage() {
 
     const trendData = await getExpenseTrends(userId, userSetting?.currency ?? '');
 
+    if (!totalBudget) return <EmptyDashboardInfo />
+
     return (
         <WrapperForPage>
             <div className="p-6 max-w-4xl mx-auto space-y-6">
@@ -66,48 +70,11 @@ export default async function DashboardPage() {
                     totalExpenses={totalExpenses}
                     balance={balance} />
 
-                {lastExpense && (
-                    <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-                        <div className="flex justify-between">
-                            <p className="text-lg font-medium mb-1">Last Expense</p>
-                            <Link href="/expenses"
-                                className="nav-btn text-sm">
-                                → View all expenses
-                            </Link>
-                        </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">{lastExpense.title}</p>
-                        <p className="text-sm">
-                            <span className="font-semibold"
-                                style={{ color: lastExpense.category.color }}>
-                                {lastExpense.category.name}
-                            </span>{" "}
-                            — {symbol}{lastExpense.amount.toFixed(2)}
-                        </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {new Date(lastExpense.createdAt).toLocaleDateString()}
-                        </p>
-                    </div>
-                )}
-
-                {lastBudget && (
-                    <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-                        <div className="flex justify-between">
-                            <p className="text-lg font-medium mb-1">Last Budget</p>
-                            <Link href="/budgets"
-                                className="nav-btn text-sm">
-                                → View all budgets
-                            </Link>
-                        </div>
-
-                        <p className="text-sm text-gray-600 dark:text-gray-300">{lastBudget.title}</p>
-                        <p className="text-sm">
-                            {symbol}{lastBudget.amount.toFixed(2)}
-                        </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {new Date(lastBudget.createdAt).toLocaleDateString()}
-                        </p>
-                    </div>
-                )}
+                <LastRecordsPanel
+                    lastExpense={lastExpense}
+                    lastBudget={lastBudget}
+                    symbol={symbol}
+                />
 
                 <ExpensesPieChart data={chartData} />
                 <ExpensesBarChart monthlyExpensesRaw={monthlyExpensesRaw}
