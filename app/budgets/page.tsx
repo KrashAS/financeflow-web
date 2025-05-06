@@ -1,4 +1,5 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
+import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import BudgetsList from "@/components/pages/budgets/BudgetsListTable";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
@@ -6,15 +7,13 @@ import { formatDate } from "@/lib/formatDate";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 
 export default async function BudgetsPage() {
     const session = await getServerSession(authOptions);
-    if (!session?.user?.uid) {
-        redirect("/auth/login");
-    }
+    if (!session?.user) return <UnauthorizedMessage />;
+
     const userId = session.user.uid;
 
     const setting = await prisma.userSetting.findUnique({ where: { userId } });

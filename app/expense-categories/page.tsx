@@ -1,4 +1,5 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
+import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseCategoriesTable from "@/components/pages/expense-categories/ExpenseCategoriesTable";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
@@ -7,7 +8,7 @@ import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 export default async function ExpenseCategoriesPage() {
     const session = await getServerSession(authOptions);
-    if (!session?.user) return null;
+    if (!session?.user) return <UnauthorizedMessage />;
 
     const categories = await prisma.expenseCategory.findMany({
         where: { userId: session.user.uid },

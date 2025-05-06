@@ -1,7 +1,12 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import WrapperForPage from '@/components/layout/WrapperForPage';
+import UnauthorizedMessage from '@/components/pages/auth/UnauthorizedMessage';
 import SubmitStatisticForm from '@/components/pages/Statistics/SubmitStatisticForm';
+import { getServerSession } from 'next-auth';
 
 export default async function DataEntryPage() {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) return <UnauthorizedMessage />;
     return (
         <WrapperForPage>
             <div className="p-6 space-y-6">

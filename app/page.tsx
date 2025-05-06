@@ -41,12 +41,17 @@ export default async function Home() {
                     </div>
                 </section>
 
-                <Link
+                {session ? <Link
                     href="/dashboard"
                     className="px-6 py-3 rounded-lg btn btn-primary"
                 >
                     Get Started
-                </Link>
+                </Link> : <Link
+                    href="/auth/login"
+                    className="px-6 py-3 rounded-lg btn btn-primary"
+                >
+                    Get Started
+                </Link>}
 
                 <div className="w-full mt-8">
                     <Image

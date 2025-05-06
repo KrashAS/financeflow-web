@@ -1,5 +1,8 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
+import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import TransactionsList from "@/components/pages/transactions/TransactionsList";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 
 async function getTransactions() {
@@ -15,6 +18,8 @@ async function getTransactions() {
 }
 
 export default async function TransactionsPage() {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) return <UnauthorizedMessage />;
     const transactions = await getTransactions();
 
     return (

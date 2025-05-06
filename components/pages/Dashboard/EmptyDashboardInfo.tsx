@@ -1,22 +1,24 @@
-import { Card } from "@/components/ui/cards/Card"
+import Link from "next/link"
 
 const EmptyDashboardInfo = () => {
     return (
-        <Card className="bg-white border border-gray-200 rounded-xl p-6 text-center shadow-sm">
-            <h2 className="text-xl font-semibold mb-2">Welcome to FinanceFlow 👋</h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-                To start tracking your finances:
+        <div className="max-w-xl mx-auto mt-16 p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg text-center space-y-4">
+            <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+                Welcome to FinanceFlow!
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+                This is your personal dashboard where you’ll track budgets, expenses, and monitor your financial trends.
             </p>
-            <ul className="text-left list-disc list-inside text-gray-700 dark:text-gray-400 mb-6">
-                <li>Add your first <strong>transaction</strong></li>
-                <li>Set a <strong>financial goal</strong></li>
-                <li>Return here to see your stats</li>
-            </ul>
-            <div className="flex justify-center gap-4">
-                <button>Add first transaction</button>
-                <button >Create goal</button>
-            </div>
-        </Card>
+            <p className="text-gray-600 dark:text-gray-300">
+                To get started, create your first budget. Once you’ve added a budget, you’ll be able to track your spending and view helpful insights.
+            </p>
+            <Link
+                href="/budgets/new"
+                className="inline-block px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            >
+                ➕ Create Budget
+            </Link>
+        </div>
     )
 }
 

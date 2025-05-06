@@ -1,4 +1,5 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
+import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseListTable from "@/components/pages/expenses/ExpenseListTable";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
@@ -9,7 +10,7 @@ import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 export default async function ExpensesPage() {
     const session = await getServerSession(authOptions);
-    if (!session?.user) return null;
+    if (!session?.user) return <UnauthorizedMessage />;
 
     const userId = session.user.uid;
 
