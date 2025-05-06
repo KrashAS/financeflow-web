@@ -1,5 +1,6 @@
 "use client";
 
+import DropdownActions from "@/components/ui/dropdowns/DropdownActions";
 import { Budget } from "@/types/budget";
 
 interface BudgetsListProps {
@@ -12,6 +13,14 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
     }
 
     const currencySymbol = budgets[0]?.currencySymbol || "";
+
+    function clickOnEdit(id: string): void {
+        console.log("Function not implemented.", id);
+    }
+
+    function clickOnDelete(id: string): void {
+        console.log("Function not implemented.", id);
+    }
 
     return (
         <div className="overflow-x-auto ">
@@ -30,7 +39,7 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)]">
-                    {budgets.map((budget) => (
+                    {budgets.map((budget, index) => (
                         <tr
                             key={budget.id}
                             className="hover:bg-gray-50 dark:hover:bg-[var(--color-dark-border-default)] transition-colors"
@@ -43,6 +52,13 @@ export default function BudgetsList({ budgets }: BudgetsListProps) {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]">
                                 {budget.createdAt}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right">
+                                <DropdownActions
+                                    onEdit={() => clickOnEdit(budget.id)}
+                                    onDelete={() => clickOnDelete(budget.id)}
+                                    openUp={budgets.length > 3 && index === budgets.length - 1}
+                                />
                             </td>
                         </tr>
                     ))}

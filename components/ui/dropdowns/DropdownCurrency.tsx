@@ -4,7 +4,7 @@ import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
 import { setCurrency } from "@/lib/redux/features/currency/currencySlice";
 import { AppDispatch } from "@/lib/redux/store";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const LOCAL_STORAGE_KEY = "selectedCurrency";
@@ -13,7 +13,19 @@ const DropdownCurrency = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedCurrency, setSelectedCurrencyState] = useState(DEFAULT_CURRENCY);
     const dispatch = useDispatch<AppDispatch>();
-    const router = useRouter()
+    const router = useRouter();
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     useEffect(() => {
         const fetchCurrency = async () => {
@@ -61,7 +73,8 @@ const DropdownCurrency = () => {
     const selected = CURRENCIES.find(c => c.code === selectedCurrency) || { symbol: '', code: '' };
 
     return (
-        <div className="relative inline-block text-left">
+        <div ref={dropdownRef}
+            className="relative inline-block text-left">
             <button
                 onClick={toggleDropdown}
                 className="btn inline-flex items-center justify-center gap-2 rounded-md bg-white dark:bg-[var(--color-dark-bg)] px-4 py-2 text-sm font-semibold text-gray-900 dark:text-white shadow ring-1 ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-500"
