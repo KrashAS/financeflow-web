@@ -6,9 +6,10 @@ type Props = {
     onEdit: () => void;
     onDelete: () => void;
     openUp?: boolean;
+    className?: string;
 };
 
-export default function DropdownActions({ onEdit, onDelete, openUp = false }: Props) {
+export default function DropdownActions({ onEdit, onDelete, openUp = false, className = "" }: Props) {
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -24,11 +25,11 @@ export default function DropdownActions({ onEdit, onDelete, openUp = false }: Pr
     }, []);
 
     return (
-        <div className="relative"
+        <div className={`relative ${className}`}
             ref={dropdownRef}>
             <button
                 onClick={() => setOpen(!open)}
-                className="btn p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="btn h-8 w-8 rounded-full backdrop-blur-sm bg-gray-200/70 dark:bg-white/10 hover:bg-gray-300/70 dark:hover:bg-white/20"
                 aria-label="Actions"
             >
                 ⋮
@@ -36,8 +37,7 @@ export default function DropdownActions({ onEdit, onDelete, openUp = false }: Pr
 
             {open && (
                 <div
-                    className={`absolute right-0 w-32 bg-white dark:bg-gray-800 overflow-hidden shadow rounded-md z-10 
-                    ${openUp ? "bottom-full mb-2" : "top-full mt-2"}`}
+                    className={`absolute z-10 right-0 w-32 bg-white dark:bg-[var(--color-dark-bg)] shadow-lg ring-1 ring-black/5 dark:ring-gray-700 overflow-hidden rounded-md  ${openUp ? "bottom-full mb-2" : "top-full mt-2"}`}
                 >
                     <button
                         onClick={() => {
@@ -53,7 +53,7 @@ export default function DropdownActions({ onEdit, onDelete, openUp = false }: Pr
                             setOpen(false);
                             onDelete();
                         }}
-                        className="btn block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        className="btn block w-full text-left px-4 py-2 text-sm  text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                         Delete
                     </button>
