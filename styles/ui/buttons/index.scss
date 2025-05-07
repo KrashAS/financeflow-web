@@ -1,7 +1,7 @@
 button,
 a {
     &.btn {
-        @apply cursor-pointer transition;
+        @apply cursor-pointer hover:transition-colors;
     }
 
     &.btn-primary {

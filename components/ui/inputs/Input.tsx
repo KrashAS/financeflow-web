@@ -3,9 +3,10 @@ import { useEffect, useRef } from "react";
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     isFocused?: boolean;
+    classNameWrapper?: string;
 }
 
-export default function Input({ label, id, isFocused, className = "", ...props }: InputProps) {
+export default function Input({ label, id, classNameWrapper = "", isFocused, className = "", ...props }: InputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -15,7 +16,7 @@ export default function Input({ label, id, isFocused, className = "", ...props }
     }, [isFocused]);
 
     return (
-        <div className="w-full">
+        <div className={`w-full ${classNameWrapper}`}>
             {label && (
                 <label htmlFor={id}
                     className="block mb-1 w-fit">

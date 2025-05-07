@@ -25,7 +25,11 @@ export default function Header() {
     }
 
     const logoutClick = () => {
-        dispatch(openPopup(POPUP_NAMES.LOGOUT));
+        dispatch(openPopup({
+            activePopup: POPUP_NAMES.LOGOUT,
+            title: "Do you really want to leave?",
+            description: "",
+        }));
     };
 
     useEffect(() => {

@@ -3,6 +3,7 @@
 import { POPUP_NAMES } from "@/constants/popupNames";
 import { useAppSelector } from "@/lib/hooks/useRedux";
 import { useEffect } from "react";
+import { ActionBudgetPopup } from "./ActionBudgetPopup";
 import { LogoutPopup } from "./LogoutPopup";
 
 const PopupsContainer = () => {
@@ -31,6 +32,7 @@ const PopupsContainer = () => {
     return (
         <>
             {currentPopup === POPUP_NAMES.LOGOUT && <LogoutPopup />}
+            {(currentPopup === POPUP_NAMES.EDIT_BUDGET || currentPopup === POPUP_NAMES.DELETE_BUDGET) && <ActionBudgetPopup />}
         </>
     );
 };
