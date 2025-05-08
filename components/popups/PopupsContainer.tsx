@@ -4,6 +4,7 @@ import { POPUP_NAMES } from "@/constants/popupNames";
 import { useAppSelector } from "@/lib/hooks/useRedux";
 import { useEffect } from "react";
 import { ActionBudgetPopup } from "./ActionBudgetPopup";
+import { ActionCategoryPopup } from "./ActionCategoryPopup";
 import { LogoutPopup } from "./LogoutPopup";
 
 const PopupsContainer = () => {
@@ -11,21 +12,13 @@ const PopupsContainer = () => {
 
     useEffect(() => {
         const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-        /* const headerMid = document.querySelector('header') as HTMLElement | null; */
 
         if (currentPopup) {
             document.body.style.paddingRight = `${scrollBarWidth}px`;
-            /* headerMid && (headerMid.classList.add('no-trans'));             
-            headerMid && (headerMid.style.paddingRight = `${scrollBarWidth}px`); */
             document.body.style.overflowY = 'hidden';
         } else {
-            /* 
-            headerMid && (headerMid.style.paddingRight = ''); */
             document.body.style.paddingRight = '';
             document.body.style.overflowY = 'auto';
-            /* setTimeout(() => {
-                headerMid && (headerMid.classList.remove('no-trans'));
-            }, 100); */
         }
     }, [currentPopup]);
 
@@ -33,6 +26,7 @@ const PopupsContainer = () => {
         <>
             {currentPopup === POPUP_NAMES.LOGOUT && <LogoutPopup />}
             {(currentPopup === POPUP_NAMES.EDIT_BUDGET || currentPopup === POPUP_NAMES.DELETE_BUDGET) && <ActionBudgetPopup />}
+            {(currentPopup === POPUP_NAMES.EDIT_CATEGORY || currentPopup === POPUP_NAMES.DELETE_CATEGORY) && <ActionCategoryPopup />}
         </>
     );
 };

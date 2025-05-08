@@ -20,8 +20,8 @@ export default function BudgetForm() {
     const currencySymbol =
         CURRENCIES.find((c) => c.code === currencyCode)?.symbol || "";
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         if (!title || Number(amount) <= 0) return;
 
         setIsSubmitting(true);

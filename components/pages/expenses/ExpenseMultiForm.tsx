@@ -38,18 +38,18 @@ export default function ExpenseMultiForm({ categories, currency }: Props) {
         }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         const payload = selectedIds
             .map((id) => ({
                 ...inputs[id],
                 categoryId: id,
             }))
-            .filter((e) => e.title?.trim() && parseFloat(e.amount) > 0)
-            .map((e) => ({
-                title: e.title.trim(),
-                amount: parseFloat(e.amount),
-                categoryId: e.categoryId,
+            .filter((element) => element.title?.trim() && parseFloat(element.amount) > 0)
+            .map((element) => ({
+                title: element.title.trim(),
+                amount: parseFloat(element.amount),
+                categoryId: element.categoryId,
                 currency,
             }));
 
@@ -103,7 +103,7 @@ export default function ExpenseMultiForm({ categories, currency }: Props) {
 
             <div className="space-y-4">
                 {selectedIds.map((id) => {
-                    const cat = categories.find((c) => c.id === id);
+                    const cat = categories.find((element) => element.id === id);
                     const value = inputs[id] || { title: "", amount: "" };
                     return (
                         <div

@@ -1,6 +1,7 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseCategoriesTable from "@/components/pages/expense-categories/ExpenseCategoriesTable";
+import { formatDate } from "@/lib/formatDate";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -14,6 +15,11 @@ export default async function ExpenseCategoriesPage() {
         where: { userId: session.user.uid },
         orderBy: { createdAt: "desc" },
     });
+
+    const formattedCategories = categories.map(({ createdAt, ...rest }) => ({
+        ...rest,
+        createdAt: formatDate(createdAt),
+    }));
 
     return (
         <WrapperForPage>
@@ -29,7 +35,7 @@ export default async function ExpenseCategoriesPage() {
                     </Link>
                 </div>
 
-                <ExpenseCategoriesTable categories={categories} />
+                <ExpenseCategoriesTable categories={formattedCategories} />
             </div>
         </WrapperForPage>
     );

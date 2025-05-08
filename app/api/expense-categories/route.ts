@@ -58,3 +58,80 @@ export async function GET() {
         return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
 }
+
+export async function PATCH(req: NextRequest) {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.uid) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id, name, color } = await req.json();
+
+    const numericId = Number(id);
+
+    if (!numericId || !name || !color) {
+        return NextResponse.json({ error: "Invalid data" }, { status: 400 });
+    }
+
+    try {
+        const category = await prisma.expenseCategory.findUnique({
+            where: { id: numericId },
+        });
+
+        if (!category) {
+            return NextResponse.json(
+                { error: "Not found category" },
+                { status: 404 }
+            );
+        }
+
+        const updatedCategory = await prisma.expenseCategory.update({
+            where: { id: numericId },
+            data: { name, color },
+        });
+
+        return NextResponse.json(updatedCategory);
+    } catch (err) {
+        console.error("Update Category Error:", err);
+        return NextResponse.json({ error: "Server error" }, { status: 500 });
+    }
+}
+
+export async function DELETE(req: NextRequest) {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.uid) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await req.json();
+    const numericId = Number(id);
+
+    if (!numericId) {
+        return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+
+    try {
+        const category = await prisma.expenseCategory.findUnique({
+            where: { id: numericId },
+        });
+
+        if (!category) {
+            return NextResponse.json(
+                { error: "Not found category" },
+                { status: 404 }
+            );
+        }
+
+        await prisma.expenseCategory.delete({ where: { id: numericId } });
+
+        return NextResponse.json({ message: "Deleted successfully" });
+    } catch (err) {
+        console.error("Delete Category Error:", err);
+        return NextResponse.json(
+            {
+                error: "You can't delete this category because it is linked to payments. Create a new category or rename this one.",
+            },
+            { status: 500 }
+        );
+    }
+}

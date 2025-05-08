@@ -8,20 +8,21 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import Input from '../ui/inputs/Input';
+import InputColor from '../ui/inputs/InputColor';
 
 
-export const ActionBudgetPopup = () => {
+export const ActionCategoryPopup = () => {
     const { activePopup, title, description, payload, } = useAppSelector((state) => state.popup);
     const [name, setName] = useState(payload?.name);
     const [errorMessage, setErrorMessage] = useState("");
-    const [amount, setAmount] = useState(`${payload?.amount}`);
+    const [color, setColor] = useState(`${payload?.color}`);
     const dispatch = useAppDispatch();
     const modalRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
-    const deleteBudget = async (id: number) => {
+    const deleteCategory = async (id: number) => {
         try {
-            const res = await fetch("/api/budgets", {
+            const res = await fetch("/api/expense-categories", {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: id }),
@@ -34,17 +35,18 @@ export const ActionBudgetPopup = () => {
                 router.refresh()
                 dispatch(closePopup());
             }
+            console.log("Category deleted");
         } catch (err) {
-            console.error("deleteBudget", err);
+            console.error("deleteCategory", err);
         }
     };
 
-    const editBudget = async (id: number, title: string, amount: number) => {
+    const editCategory = async (id: number, name: string, color: string) => {
         try {
-            const res = await fetch("/api/budgets", {
+            const res = await fetch("/api/expense-categories", {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: id, title: title, amount: amount }),
+                body: JSON.stringify({ id: id, name: name, color: color }),
             });
 
             if (!res.ok) {
@@ -55,13 +57,12 @@ export const ActionBudgetPopup = () => {
                 dispatch(closePopup());
             }
 
-            /*  const data = await res.json(); */
-
+            const data = await res.json();
+            console.log("Category updated:", data);
         } catch (err) {
-            console.error("editBudget", err);
+            console.error("editCategory", err);
         }
     };
-
 
     useOnClickOutside(modalRef, () => dispatch(closePopup()));
 
@@ -69,13 +70,13 @@ export const ActionBudgetPopup = () => {
         event.preventDefault();
         if (!payload?.id) return;
 
-        if (activePopup === POPUP_NAMES.DELETE_BUDGET) {
-            deleteBudget(payload.id)
+        if (activePopup === POPUP_NAMES.DELETE_CATEGORY) {
+            deleteCategory(payload.id)
         }
 
-        if (activePopup === POPUP_NAMES.EDIT_BUDGET) {
-            if (!name || !amount) return;
-            editBudget(payload.id, name, +amount)
+        if (activePopup === POPUP_NAMES.EDIT_CATEGORY) {
+            if (!name || !color) return;
+            editCategory(payload.id, name, color)
         }
     };
 
@@ -89,32 +90,28 @@ export const ActionBudgetPopup = () => {
                 </h2>
                 <p className="text-sm text-center text-gray-600">{description}</p>
                 <form onSubmit={handleSubmit}>
-                    {activePopup === POPUP_NAMES.EDIT_BUDGET && <div>
+                    {activePopup === POPUP_NAMES.EDIT_CATEGORY && <div>
                         <Input type="text"
-                            id="budget-name"
-                            classNameWrapper="mt-3"
+                            id="category-name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             label="Budget Name"
-                            placeholder="Enter the income name"
+                            placeholder="Enter category"
                             isFocused={true}
                             required />
-                        <Input type="number"
-                            id="budget-amount"
-                            classNameWrapper="mt-3"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            label={`Amount${payload?.currencySymbol ? `, ${payload.currencySymbol}` : ""}`}
-                            placeholder="Enter the income amount"
-                            required />
+                        <InputColor
+                            value={color}
+                            onChange={setColor}
+                            classNameWrapper="mb-4"
+                        />
 
                     </div>}
                     {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
                     <div className="flex gap-4 justify-between mt-6">
                         <Button
                             type="submit"
-                            className={`px-4 py-2 rounded-xl btn ${activePopup === POPUP_NAMES.DELETE_BUDGET ? "btn-warning" : "btn-primary"}`}
-                            title={activePopup === POPUP_NAMES.DELETE_BUDGET ? "Delete" : "Confirm"}
+                            className={`px-4 py-2 rounded-xl btn ${activePopup === POPUP_NAMES.DELETE_CATEGORY ? "btn-warning" : "btn-primary"}`}
+                            title={activePopup === POPUP_NAMES.DELETE_CATEGORY ? "Delete" : "Confirm"}
                         />
                         <Button
                             type="button"

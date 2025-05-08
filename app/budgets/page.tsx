@@ -18,8 +18,8 @@ export default async function BudgetsPage() {
 
     const setting = await prisma.userSetting.findUnique({ where: { userId } });
     const currencyCode = setting?.currency || DEFAULT_CURRENCY;
-    const currencyInfo = CURRENCIES.find(c => c.code === currencyCode) || CURRENCIES[0];
-    const symbol = CURRENCIES.find(c => c.code === currencyCode)?.symbol || "";
+    const currencyInfo = CURRENCIES.find(element => element.code === currencyCode) || CURRENCIES[0];
+    const symbol = CURRENCIES.find(element => element.code === currencyCode)?.symbol || "";
 
     const budgets = await prisma.budget.findMany({
         where: { userId, currency: currencyCode },
@@ -35,16 +35,16 @@ export default async function BudgetsPage() {
         orderBy: { createdAt: "desc" },
     });
 
-    const formattedBudgets = budgets.map((b) => ({
-        id: b.id.toString(),
-        name: b.title,
-        amount: b.amount,
+    const formattedBudgets = budgets.map(({ id, title, amount, createdAt }) => ({
+        id,
+        name: title,
+        amount,
         currencySymbol: currencyInfo.symbol,
-        createdAt: formatDate(b.createdAt),
+        createdAt: formatDate(createdAt),
     }));
 
-    const totalBudget = budgets.reduce((sum, b) => sum + b.amount, 0);
-    const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
+    const totalBudget = budgets.reduce((sum, element) => sum + element.amount, 0);
+    const totalExpenses = expenses.reduce((sum, element) => sum + element.amount, 0);
     const balance = totalBudget - totalExpenses;
 
     return (

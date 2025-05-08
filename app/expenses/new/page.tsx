@@ -4,6 +4,7 @@ import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseMultiForm from "@/components/pages/expenses/ExpenseMultiForm";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
+import { formatDate } from "@/lib/formatDate";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
@@ -15,7 +16,7 @@ export default async function NewExpensePage() {
     const userId = session.user.uid;
     const setting = await prisma.userSetting.findUnique({ where: { userId } });
     const currencyCode = setting?.currency ?? DEFAULT_CURRENCY;
-    const symbol = CURRENCIES.find(c => c.code === currencyCode)?.symbol || "";
+    const symbol = CURRENCIES.find(element => element.code === currencyCode)?.symbol || "";
 
     const [budgets, expense, categories, user] = await Promise.all([
 
@@ -31,8 +32,13 @@ export default async function NewExpensePage() {
         }),
     ]);
 
-    const totalBudget = budgets.reduce((sum, b) => sum + b.amount, 0);
-    const totalExpenses = expense.reduce((sum, e) => sum + e.amount, 0);
+    const formattedCategories = categories.map(({ createdAt, ...rest }) => ({
+        ...rest,
+        createdAt: formatDate(createdAt),
+    }));
+
+    const totalBudget = budgets.reduce((sum, element) => sum + element.amount, 0);
+    const totalExpenses = expense.reduce((sum, element) => sum + element.amount, 0);
     const balance = totalBudget - totalExpenses;
 
     if (!user?.currency) {
@@ -61,7 +67,7 @@ export default async function NewExpensePage() {
                             totalBudget={totalBudget}
                             totalExpenses={totalExpenses}
                             balance={balance} />
-                        <ExpenseMultiForm categories={categories}
+                        <ExpenseMultiForm categories={formattedCategories}
                             currency={user.currency} />
                     </>
                 )}
