@@ -2,7 +2,7 @@ import { PopupName } from "@/constants/popupNames";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IPayload {
-    id: string;
+    id: number;
     name: string;
     amount?: number;
     createdAt?: string;

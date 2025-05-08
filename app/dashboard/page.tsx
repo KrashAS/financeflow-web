@@ -42,7 +42,7 @@ export default async function DashboardPage() {
     });
 
     const chartData = expensesByCategory.map(item => {
-        const category = categories.find(c => c.id === item.categoryId);
+        const category = categories.find(element => element.id === item.categoryId);
         return {
             name: category?.name || "Unknown",
             value: item._sum.amount || 0,

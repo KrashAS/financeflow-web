@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/buttons/Button";
 import Input from "@/components/ui/inputs/Input";
+import InputColor from "@/components/ui/inputs/InputColor";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -12,8 +13,8 @@ export default function ExpenseCategoryForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         if (!name || !color) return;
 
         setIsSubmitting(true);
@@ -46,17 +47,11 @@ export default function ExpenseCategoryForm() {
                 placeholder="Enter category"
                 isFocused={true}
                 required />
-            <div>
-                <label className="block mb-1 w-fit">
-                    Category Color
-                </label>
-                <input
-                    type="color"
-                    value={color}
-                    onChange={(e) => setColor(e.target.value)}
-                    className="w-16 h-10 p-1 rounded-md border border-gray-300 dark:border-[var(--color-dark-border-default)] bg-transparent cursor-pointer"
-                />
-            </div>
+            <InputColor
+                value={color}
+                onChange={setColor}
+                classNameWrapper="mb-4"
+            />
             <div className="flex justify-between">
                 <Button
                     type="submit"

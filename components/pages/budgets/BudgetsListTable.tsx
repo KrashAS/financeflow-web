@@ -1,6 +1,5 @@
 "use client";
 
-
 import DropdownActions from "@/components/ui/dropdowns/DropdownActions";
 import { POPUP_NAMES } from "@/constants/popupNames";
 import { useAppDispatch } from "@/lib/hooks/useRedux";
@@ -15,7 +14,7 @@ export default function BudgetsListTable({ budgets }: BudgetsListProps) {
     const dispatch = useAppDispatch();
     const currencySymbol = budgets[0]?.currencySymbol || "";
 
-    function clickOnEdit(id: string): void {
+    function clickOnEdit(id: number): void {
         const budget = budgets.find((b) => b.id === id);
         if (!budget) return;
 
@@ -33,7 +32,7 @@ export default function BudgetsListTable({ budgets }: BudgetsListProps) {
         }));
     }
 
-    function clickOnDelete(id: string): void {
+    function clickOnDelete(id: number): void {
         const budget = budgets.find((b) => b.id === id);
         if (!budget) return;
 
@@ -69,9 +68,7 @@ export default function BudgetsListTable({ budgets }: BudgetsListProps) {
                             <th className="px-6 py-3 text-left text-xs font-semibold text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider">
                                 Created At
                             </th>
-                            <th className="px-6 py-3 text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider">
-
-                            </th>
+                            <th className="px-6 py-3 text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider"></th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)]">
@@ -89,8 +86,7 @@ export default function BudgetsListTable({ budgets }: BudgetsListProps) {
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]">
                                     {budget.createdAt}
                                 </td>
-                                <td className="px-6 py-4 text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]">
-                                </td>
+                                <td className="px-6 py-4 text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]"></td>
                             </tr>
                         ))}
                     </tbody>

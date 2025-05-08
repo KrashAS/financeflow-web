@@ -78,7 +78,7 @@ export async function DELETE(req: NextRequest) {
 
     const userId = session.user.uid;
     const { id } = await req.json();
-    const numericId = Number(id); // 🔧
+    const numericId = Number(id);
 
     if (!numericId) {
         return NextResponse.json({ error: "ID is required" }, { status: 400 });
@@ -93,7 +93,7 @@ export async function DELETE(req: NextRequest) {
             return NextResponse.json({ error: "Not found" }, { status: 404 });
         }
 
-        await prisma.budget.delete({ where: { id: numericId } }); // 🔧
+        await prisma.budget.delete({ where: { id: numericId } });
 
         return NextResponse.json({ message: "Deleted successfully" });
     } catch (err) {
