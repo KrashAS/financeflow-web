@@ -8,7 +8,7 @@ import { POPUP_NAMES } from "@/constants/popupNames";
 import { useAppDispatch } from "@/lib/hooks/useRedux";
 import { openPopup } from "@/lib/redux/features/popup/popupSlice";
 import { Expense } from "@/types/expense";
-import { ExpenseTableRow } from "./ExpenseTableRow";
+import { ExpensesTableRow } from "./ExpensesTableRow";
 
 interface Props {
     expenses: Expense[];
@@ -72,7 +72,7 @@ export default function ExpensesTable({ expenses, symbol }: Props) {
                     />
                     <TableBody>
                         {expenses.map((expense) => (
-                            <ExpenseTableRow key={expense.id}
+                            <ExpensesTableRow key={expense.id}
                                 expense={expense}
                                 symbol={symbol}
                                 isAction={true} />

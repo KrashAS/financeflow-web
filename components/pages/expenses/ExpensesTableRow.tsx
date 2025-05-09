@@ -1,14 +1,16 @@
 import { Expense } from "@/types/expense";
 
-export const ExpenseTableRow = ({
-    expense,
-    symbol,
-    isAction = false
-}: {
+interface IProps {
     expense: Expense;
     symbol: string;
     isAction?: boolean
-}) => (
+};
+
+export const ExpensesTableRow = ({
+    expense,
+    symbol,
+    isAction = false
+}: IProps) => (
     <tr className="hover:bg-gray-50 dark:hover:bg-[var(--color-dark-border-default)]">
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-dark-foreground)]">
             {expense.title}

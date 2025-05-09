@@ -8,7 +8,7 @@ import { POPUP_NAMES } from "@/constants/popupNames";
 import { useAppDispatch } from "@/lib/hooks/useRedux";
 import { openPopup } from "@/lib/redux/features/popup/popupSlice";
 import { Category } from "@/types/category";
-import { CategoryTableRow } from "./ExpenseCategoryTableRow";
+import { ExpenseCategoriesTableRow } from "./ExpenseCategoriesTableRow";
 
 interface Props {
     categories: Category[];
@@ -68,7 +68,7 @@ export default function ExpenseCategoriesTable({ categories }: Props) {
                         isAction={true} />
                     <TableBody>
                         {categories.map((cat) => (
-                            <CategoryTableRow key={cat.id}
+                            <ExpenseCategoriesTableRow key={cat.id}
                                 category={cat}
                                 isAction={true} />
                         ))}
