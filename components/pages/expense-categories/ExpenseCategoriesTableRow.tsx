@@ -1,6 +1,11 @@
 import { Category } from "@/types/category";
 
-export const CategoryTableRow = ({ category, isAction = false }: { category: Category, isAction?: boolean }) => (
+interface IProps {
+    category: Category;
+    isAction?: boolean
+};
+
+export const ExpenseCategoriesTableRow = ({ category, isAction = false }: IProps) => (
     <tr className="hover:bg-gray-50 dark:hover:bg-[var(--color-dark-border-default)]">
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-dark-foreground)]">
             {category.name}

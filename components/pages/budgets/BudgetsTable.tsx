@@ -1,10 +1,14 @@
 "use client";
 
 import DropdownActions from "@/components/ui/dropdowns/DropdownActions";
+import { TableBody } from "@/components/ui/tables/TableBody";
+import { TableHeader } from "@/components/ui/tables/TableHeader";
+import { TableWrapper } from "@/components/ui/tables/TableWrapper";
 import { POPUP_NAMES } from "@/constants/popupNames";
 import { useAppDispatch } from "@/lib/hooks/useRedux";
 import { openPopup } from "@/lib/redux/features/popup/popupSlice";
 import { Budget } from "@/types/budget";
+import { BudgetsTableRow } from "./BudgetsTableRow";
 
 interface BudgetsListProps {
     budgets: Budget[];
@@ -56,41 +60,24 @@ export default function BudgetsTable({ budgets }: BudgetsListProps) {
     return (
         <div className="relative">
             <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)] bg-[var(--color-bg)] dark:bg-[var(--color-dark-bg)] rounded-md overflow-hidden">
-                    <thead className="bg-gray-100 dark:bg-[var(--color-dark-bg)]">
-                        <tr>
-                            <th className="px-6 py-3 text-left text-xs font-semibold text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider">
-                                Name
-                            </th>
-                            <th className="px-6 py-3 text-right text-xs font-semibold text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider">
-                                Amount
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-semibold text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider">
-                                Created At
-                            </th>
-                            <th className="px-6 py-3 text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider"></th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)]">
+                <TableWrapper>
+                    <TableHeader
+                        columns={[
+                            { title: "Name" },
+                            { title: "Amount", align: "right" },
+                            { title: "Created At" },
+                        ]}
+                        isAction={true}
+                    />
+                    <TableBody>
                         {budgets.map((budget) => (
-                            <tr
-                                key={budget.id}
-                                className="hover:bg-gray-50 dark:hover:bg-[var(--color-dark-border-default)] transition-colors"
-                            >
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--color-foreground)] dark:text-[var(--color-dark-foreground)]">
-                                    {budget.name}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted)] dark:text-[var(--color-dark-text-muted)] text-right">
-                                    {`${budget.amount.toFixed(2)} ${currencySymbol}`}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]">
-                                    {budget.createdAt}
-                                </td>
-                                <td className="px-6 py-4 text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]"></td>
-                            </tr>
+                            <BudgetsTableRow key={budget.id}
+                                budget={budget}
+                                currencySymbol={currencySymbol}
+                                isAction={true} />
                         ))}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </TableWrapper>
             </div>
             <div className="absolute z-10 top-[50px] right-2">
                 {budgets?.map((budget, index) => <DropdownActions
