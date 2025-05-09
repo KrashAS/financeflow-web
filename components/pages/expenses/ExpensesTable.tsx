@@ -71,6 +71,7 @@ export default function ExpensesTable({ expenses, symbol }: Props) {
                             <th className="px-6 py-3 text-left text-xs font-semibold text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider">
                                 Date
                             </th>
+                            <th className="px-6 py-3 text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider"></th>
                         </tr>
                     </thead>
                     <tbody className="bg-white dark:bg-[var(--color-dark-bg)] divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)]">
@@ -94,6 +95,7 @@ export default function ExpensesTable({ expenses, symbol }: Props) {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]">
                                         {expense.createdAt}
                                     </td>
+                                    <td className="px-6 py-4 text-[var(--color-text-muted-light)] dark:text-[var(--color-dark-text-muted)]"></td>
                                 </tr>
                             );
                         })}
