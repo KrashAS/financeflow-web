@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import Input from '../ui/inputs/Input';
+import PopupWrapper from './PopupWrapper';
 
 
 export const ActionExpensePopup = () => {
@@ -79,53 +80,50 @@ export const ActionExpensePopup = () => {
     };
 
     return (
-        <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/10 flex items-center justify-center p-3">
-            <div ref={modalRef}
-                className="bg-white dark:bg-dark rounded-2xl p-6 shadow-xl w-full max-w-sm">
-                <h2 className="text-xl font-semibold text-center mb-2 text-gray-900">
-                    {`${title}:`}
-                    <span className="block">{`${payload?.name} ${payload?.createdAt}`}</span>
-                </h2>
-                <p className="text-sm text-center text-gray-600">{description}</p>
-                <form onSubmit={handleSubmit}>
-                    {activePopup === POPUP_NAMES.EDIT_EXPENSE && <div>
-                        <Input type="text"
-                            id="expense-name"
-                            classNameWrapper="mt-3"
-                            classNameLabel="text-black"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            label="Expense Name"
-                            placeholder="Enter the income name"
-                            isFocused={true}
-                            required />
-                        <Input type="number"
-                            id="expense-amount"
-                            classNameWrapper="mt-3"
-                            classNameLabel="text-black"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            label={`Amount${payload?.currencySymbol ? `, ${payload.currencySymbol}` : ""}`}
-                            placeholder="Enter the income amount"
-                            required />
+        <PopupWrapper>
+            <h2 className="text-xl font-semibold text-center mb-2 text-gray-900">
+                {`${title}:`}
+                <span className="block">{`${payload?.name} ${payload?.createdAt}`}</span>
+            </h2>
+            <p className="text-sm text-center text-gray-600">{description}</p>
+            <form onSubmit={handleSubmit}>
+                {activePopup === POPUP_NAMES.EDIT_EXPENSE && <div>
+                    <Input type="text"
+                        id="expense-name"
+                        classNameWrapper="mt-3"
+                        classNameLabel="text-black"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        label="Expense Name"
+                        placeholder="Enter the income name"
+                        isFocused={true}
+                        required />
+                    <Input type="number"
+                        id="expense-amount"
+                        classNameWrapper="mt-3"
+                        classNameLabel="text-black"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                        label={`Amount${payload?.currencySymbol ? `, ${payload.currencySymbol}` : ""}`}
+                        placeholder="Enter the income amount"
+                        required />
 
-                    </div>}
-                    {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
-                    <div className="flex gap-4 justify-between mt-6">
-                        <Button
-                            type="submit"
-                            className={`px-4 py-2 rounded-xl btn ${activePopup === POPUP_NAMES.DELETE_EXPENSE ? "btn-warning" : "btn-primary"}`}
-                            title={activePopup === POPUP_NAMES.DELETE_EXPENSE ? "Delete" : "Confirm"}
-                        />
-                        <Button
-                            type="button"
-                            onClickButton={() => dispatch(closePopup())}
-                            className="px-4 py-2 rounded-xl btn btn-secondary"
-                            title="Cancel"
-                        />
-                    </div>
-                </form>
-            </div>
-        </div>
+                </div>}
+                {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
+                <div className="flex gap-4 justify-between mt-6">
+                    <Button
+                        type="submit"
+                        className={`px-4 py-2 rounded-xl btn ${activePopup === POPUP_NAMES.DELETE_EXPENSE ? "btn-warning" : "btn-primary"}`}
+                        title={activePopup === POPUP_NAMES.DELETE_EXPENSE ? "Delete" : "Confirm"}
+                    />
+                    <Button
+                        type="button"
+                        onClickButton={() => dispatch(closePopup())}
+                        className="px-4 py-2 rounded-xl btn btn-secondary"
+                        title="Cancel"
+                    />
+                </div>
+            </form>
+        </PopupWrapper>
     );
 };
