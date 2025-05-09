@@ -6,6 +6,8 @@ import { storage } from '@/utils/storage';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
+import { Button } from '../ui/buttons/Button';
+import PopupWrapper from './PopupWrapper';
 
 
 export const LogoutPopup = () => {
@@ -29,27 +31,22 @@ export const LogoutPopup = () => {
     useOnClickOutside(modalRef, () => { dispatch(closePopup()) });
 
     return (
-        <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/10 flex items-center justify-center p-3">
-            <div ref={modalRef}
-                className="bg-white dark:bg-dark rounded-2xl p-6 shadow-xl w-full max-w-sm">
-                <h2 className="text-xl font-semibold text-center mb-4 text-gray-900">
-                    {title}
-                </h2>
-                <div className="flex gap-4 justify-around mt-6">
-                    <button
-                        onClick={handleLogout}
-                        className="px-4 py-2 rounded-xl btn btn-warning"
-                    >
-                        Yes
-                    </button>
-                    <button
-                        onClick={handleClose}
-                        className="px-4 py-2 rounded-xl btn btn-secondary"
-                    >
-                        Cancel
-                    </button>
-                </div>
+        <PopupWrapper>
+            <h2 className="text-xl font-semibold text-center mb-4 text-gray-900">
+                {title}
+            </h2>
+            <div className="flex gap-4 justify-around mt-6">
+                <Button
+                    onClickButton={handleLogout}
+                    className="px-4 py-2 rounded-xl btn btn-warning"
+                    title="Yes"
+                />
+                <Button
+                    onClickButton={handleClose}
+                    className="px-4 py-2 rounded-xl btn btn-secondary"
+                    title="Cancel"
+                />
             </div>
-        </div>
+        </PopupWrapper>
     );
 };
