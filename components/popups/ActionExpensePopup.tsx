@@ -8,21 +8,20 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import Input from '../ui/inputs/Input';
-import InputColor from '../ui/inputs/InputColor';
 
 
-export const ActionCategoryPopup = () => {
+export const ActionExpensePopup = () => {
     const { activePopup, title, description, payload, } = useAppSelector((state) => state.popup);
     const [name, setName] = useState(payload?.name);
     const [errorMessage, setErrorMessage] = useState("");
-    const [color, setColor] = useState(`${payload?.color}`);
+    const [amount, setAmount] = useState(`${payload?.amount}`);
     const dispatch = useAppDispatch();
     const modalRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
-    const deleteCategory = async (id: number) => {
+    const deleteExpense = async (id: number) => {
         try {
-            const res = await fetch("/api/expense-categories", {
+            const res = await fetch("/api/expenses", {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ id: id }),
@@ -30,37 +29,36 @@ export const ActionCategoryPopup = () => {
 
             if (!res.ok) {
                 const { error } = await res.json();
-                setErrorMessage(error || "Failed to delete");
+                setErrorMessage(error || "Failed to delete expense");
             } else {
                 router.refresh()
                 dispatch(closePopup());
             }
-            console.log("Category deleted");
         } catch (err) {
-            console.error("delete category", err);
+            console.error("delete expense", err);
         }
     };
 
-    const editCategory = async (id: number, name: string, color: string) => {
+    const editExpense = async (id: number, title: string, amount: number) => {
         try {
-            const res = await fetch("/api/expense-categories", {
+            const res = await fetch("/api/expenses", {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: id, name: name, color: color }),
+                body: JSON.stringify({ id: id, title: title, amount: amount }),
             });
 
             if (!res.ok) {
                 const { error } = await res.json();
-                setErrorMessage(error || "Failed to update");
+                setErrorMessage(error || "Failed to update expense");
             } else {
                 router.refresh()
                 dispatch(closePopup());
             }
 
-            const data = await res.json();
-            console.log("Category updated:", data);
+            /*  const data = await res.json(); */
+
         } catch (err) {
-            console.error("edit category", err);
+            console.error("edit expense", err);
         }
     };
 
@@ -70,13 +68,13 @@ export const ActionCategoryPopup = () => {
         event.preventDefault();
         if (!payload?.id) return;
 
-        if (activePopup === POPUP_NAMES.DELETE_CATEGORY) {
-            deleteCategory(payload.id)
+        if (activePopup === POPUP_NAMES.DELETE_EXPENSE) {
+            deleteExpense(payload.id)
         }
 
-        if (activePopup === POPUP_NAMES.EDIT_CATEGORY) {
-            if (!name || !color) return;
-            editCategory(payload.id, name, color)
+        if (activePopup === POPUP_NAMES.EDIT_EXPENSE) {
+            if (!name || !amount) return;
+            editExpense(payload.id, name, +amount)
         }
     };
 
@@ -90,31 +88,34 @@ export const ActionCategoryPopup = () => {
                 </h2>
                 <p className="text-sm text-center text-gray-600">{description}</p>
                 <form onSubmit={handleSubmit}>
-                    {activePopup === POPUP_NAMES.EDIT_CATEGORY && <div>
+                    {activePopup === POPUP_NAMES.EDIT_EXPENSE && <div>
                         <Input type="text"
-                            id="category-name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            label="Category Name"
+                            id="expense-name"
                             classNameWrapper="mt-3"
                             classNameLabel="text-black"
-                            placeholder="Enter category"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            label="Expense Name"
+                            placeholder="Enter the income name"
                             isFocused={true}
                             required />
-                        <InputColor
-                            value={color}
-                            onChange={setColor}
-                            classNameWrapper="mb-4 mt-3"
+                        <Input type="number"
+                            id="expense-amount"
+                            classNameWrapper="mt-3"
                             classNameLabel="text-black"
-                        />
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            label={`Amount${payload?.currencySymbol ? `, ${payload.currencySymbol}` : ""}`}
+                            placeholder="Enter the income amount"
+                            required />
 
                     </div>}
                     {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
                     <div className="flex gap-4 justify-between mt-6">
                         <Button
                             type="submit"
-                            className={`px-4 py-2 rounded-xl btn ${activePopup === POPUP_NAMES.DELETE_CATEGORY ? "btn-warning" : "btn-primary"}`}
-                            title={activePopup === POPUP_NAMES.DELETE_CATEGORY ? "Delete" : "Confirm"}
+                            className={`px-4 py-2 rounded-xl btn ${activePopup === POPUP_NAMES.DELETE_EXPENSE ? "btn-warning" : "btn-primary"}`}
+                            title={activePopup === POPUP_NAMES.DELETE_EXPENSE ? "Delete" : "Confirm"}
                         />
                         <Button
                             type="button"

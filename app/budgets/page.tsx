@@ -1,6 +1,6 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
-import BudgetsListTable from "@/components/pages/budgets/BudgetsListTable";
+import BudgetsTable from "@/components/pages/budgets/BudgetsTable";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
 import { formatDate } from "@/lib/formatDate";
@@ -64,7 +64,7 @@ export default async function BudgetsPage() {
                     totalBudget={totalBudget}
                     totalExpenses={totalExpenses}
                     balance={balance} />
-                <BudgetsListTable budgets={formattedBudgets} />
+                <BudgetsTable budgets={formattedBudgets} />
             </div>
         </WrapperForPage>
     );

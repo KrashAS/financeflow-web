@@ -10,12 +10,12 @@ interface BudgetsListProps {
     budgets: Budget[];
 }
 
-export default function BudgetsListTable({ budgets }: BudgetsListProps) {
+export default function BudgetsTable({ budgets }: BudgetsListProps) {
     const dispatch = useAppDispatch();
     const currencySymbol = budgets[0]?.currencySymbol || "";
 
     function clickOnEdit(id: number): void {
-        const budget = budgets.find((b) => b.id === id);
+        const budget = budgets.find((element) => element.id === id);
         if (!budget) return;
 
         dispatch(openPopup({
@@ -33,7 +33,7 @@ export default function BudgetsListTable({ budgets }: BudgetsListProps) {
     }
 
     function clickOnDelete(id: number): void {
-        const budget = budgets.find((b) => b.id === id);
+        const budget = budgets.find((element) => element.id === id);
         if (!budget) return;
 
         dispatch(openPopup({
@@ -54,7 +54,7 @@ export default function BudgetsListTable({ budgets }: BudgetsListProps) {
     }
 
     return (
-        <div className="relative ">
+        <div className="relative">
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-[var(--color-border-default)] dark:divide-[var(--color-dark-border-default)] bg-[var(--color-bg)] dark:bg-[var(--color-dark-bg)] rounded-md overflow-hidden">
                     <thead className="bg-gray-100 dark:bg-[var(--color-dark-bg)]">
