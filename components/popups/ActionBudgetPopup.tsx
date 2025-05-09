@@ -93,6 +93,7 @@ export const ActionBudgetPopup = () => {
                         <Input type="text"
                             id="budget-name"
                             classNameWrapper="mt-3"
+                            classNameLabel="text-black"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             label="Budget Name"
@@ -102,6 +103,7 @@ export const ActionBudgetPopup = () => {
                         <Input type="number"
                             id="budget-amount"
                             classNameWrapper="mt-3"
+                            classNameLabel="text-black"
                             value={amount}
                             onChange={(e) => setAmount(e.target.value)}
                             label={`Amount${payload?.currencySymbol ? `, ${payload.currencySymbol}` : ""}`}

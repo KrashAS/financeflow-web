@@ -5,6 +5,7 @@ import { useAppSelector } from "@/lib/hooks/useRedux";
 import { useEffect } from "react";
 import { ActionBudgetPopup } from "./ActionBudgetPopup";
 import { ActionCategoryPopup } from "./ActionCategoryPopup";
+import { ActionExpensePopup } from "./ActionExpensePopup";
 import { LogoutPopup } from "./LogoutPopup";
 
 const PopupsContainer = () => {
@@ -27,6 +28,7 @@ const PopupsContainer = () => {
             {currentPopup === POPUP_NAMES.LOGOUT && <LogoutPopup />}
             {(currentPopup === POPUP_NAMES.EDIT_BUDGET || currentPopup === POPUP_NAMES.DELETE_BUDGET) && <ActionBudgetPopup />}
             {(currentPopup === POPUP_NAMES.EDIT_CATEGORY || currentPopup === POPUP_NAMES.DELETE_CATEGORY) && <ActionCategoryPopup />}
+            {(currentPopup === POPUP_NAMES.EDIT_EXPENSE || currentPopup === POPUP_NAMES.DELETE_EXPENSE) && <ActionExpensePopup />}
         </>
     );
 };

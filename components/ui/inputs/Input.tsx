@@ -4,9 +4,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     isFocused?: boolean;
     classNameWrapper?: string;
+    classNameLabel?: string;
 }
 
-export default function Input({ label, id, classNameWrapper = "", isFocused, className = "", ...props }: InputProps) {
+export default function Input({ label, id, classNameWrapper = "", isFocused, className = "", classNameLabel = "", ...props }: InputProps) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -19,7 +20,7 @@ export default function Input({ label, id, classNameWrapper = "", isFocused, cla
         <div className={`w-full ${classNameWrapper}`}>
             {label && (
                 <label htmlFor={id}
-                    className="block mb-1 w-fit">
+                    className={`block mb-1 w-fit ${classNameLabel}`}>
                     {label}
                 </label>
             )}

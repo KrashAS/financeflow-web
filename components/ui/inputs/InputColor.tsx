@@ -7,6 +7,7 @@ type ColorInputProps = {
     value: string;
     onChange: (value: string) => void;
     classNameWrapper?: string;
+    classNameLabel?: string;
 };
 
 export default function InputColor({
@@ -14,10 +15,11 @@ export default function InputColor({
     value,
     onChange,
     classNameWrapper = "",
+    classNameLabel = "",
 }: ColorInputProps) {
     return (
         <div className={classNameWrapper}>
-            <label className="block mb-1 w-fit">
+            <label className={`block mb-1 w-fit ${classNameLabel}`}>
                 {label}
             </label>
             <input
