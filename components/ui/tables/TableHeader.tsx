@@ -14,7 +14,7 @@ export const TableHeader = ({ columns, isAction = false }: TableHeaderProps) => 
                     {title}
                 </th>
             ))}
-            {isAction && <th className="px-6 py-3 text-[var(--color-text-gray)] dark:text-[var(--color-dark-text-gray)] uppercase tracking-wider"></th>}
+            {isAction && <th className="px-6 py-3"></th>}
         </tr>
     </thead>
 );
