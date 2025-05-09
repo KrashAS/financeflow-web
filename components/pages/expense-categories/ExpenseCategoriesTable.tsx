@@ -61,7 +61,10 @@ export default function ExpenseCategoriesTable({ categories }: Props) {
         <div className="relative">
             <div className="overflow-x-auto">
                 <TableWrapper>
-                    <TableHeader columns={[{ title: "Name" }, { title: "Color" }]}
+                    <TableHeader
+                        columns={[
+                            { title: "Name" },
+                            { title: "Color" }]}
                         isAction={true} />
                     <TableBody>
                         {categories.map((cat) => (
