@@ -14,12 +14,12 @@ export default function SubmitStatisticForm() {
     const [error, setError] = useState("");
     const router = useRouter()
 
-    const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setType(e.target.value as MetricType);
+    const handleTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setType(event.target.value as MetricType);
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         setIsSubmitting(true);
         setError("");
 
@@ -49,11 +49,11 @@ export default function SubmitStatisticForm() {
                     onChange={handleTypeChange}
                     className="w-full border px-3 py-2 rounded"
                 >
-                    {METRIC_TYPES.map((m) => (
-                        <option key={m}
-                            value={m}
+                    {METRIC_TYPES.map((element) => (
+                        <option key={element}
+                            value={element}
                             className="text-black">
-                            {m.charAt(0).toUpperCase() + m.slice(1)}
+                            {element.charAt(0).toUpperCase() + element.slice(1)}
                         </option>
                     ))}
                 </select>
@@ -63,7 +63,7 @@ export default function SubmitStatisticForm() {
                 <input
                     type="number"
                     value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
+                    onChange={(event) => setAmount(event.target.value)}
                     className="w-full border px-3 py-2 rounded"
                     required
                 />

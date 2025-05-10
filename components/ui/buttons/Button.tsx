@@ -14,7 +14,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             <button
                 ref={ref}
                 type={type}
-                className={`cursor-pointer ${className}`}
+                className={`${className}`}
                 onClick={onClickButton}
                 disabled={disabled}
             >
