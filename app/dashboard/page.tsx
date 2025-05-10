@@ -1,15 +1,16 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import EmptyDashboardInfo from "@/components/pages/dashboard/EmptyDashboardInfo";
-import ExpensesBarChart from "@/components/pages/dashboard/ExpensesBarChart";
-import ExpensesLineChart from "@/components/pages/dashboard/ExpensesLineChart";
-import ExpensesPieChart from "@/components/pages/dashboard/ExpensesPieChart";
 import LastRecordsPanel from "@/components/pages/dashboard/LastRecordsPanel";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
+import CustomBarChart from "@/components/ui/charts/CustomBarChart";
+import CustomLineChart from "@/components/ui/charts/CustomLineChart";
+import CustomPieChart from "@/components/ui/charts/CustomPieChart";
 import { DEFAULT_CURRENCY } from "@/constants/currencies";
 import { prisma } from "@/lib/prisma";
 import { getDashboardData } from "@/utils/getDashboardData";
 import { getExpenseTrends } from "@/utils/getExpenseTrends";
+import { groupByMonth } from "@/utils/groupByMonth";
 import { startOfMonth, subMonths } from "date-fns";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
@@ -56,13 +57,18 @@ export default async function DashboardPage() {
         select: { amount: true, createdAt: true },
     });
 
+    const expensesMonthlyGrouped = groupByMonth(monthlyExpensesRaw, 6);
+
     const trendData = await getExpenseTrends(userId, userSetting?.currency ?? '');
+
+    console.log(trendData);
+
 
     if (!totalBudget) return <EmptyDashboardInfo />
 
     return (
         <WrapperForPage>
-            <div className="p-6 max-w-4xl mx-auto space-y-6">
+            <div className="p-6 max-w-7xl mx-auto space-y-6">
                 <h1 className="text-2xl font-bold">📊 Analytics Dashboard</h1>
 
                 <SummaryCards symbol={symbol}
@@ -76,13 +82,14 @@ export default async function DashboardPage() {
                     symbol={symbol}
                 />
 
-                <ExpensesPieChart data={chartData} />
-                <ExpensesBarChart monthlyExpensesRaw={monthlyExpensesRaw}
-                    symbol={symbol} />
-                <ExpensesLineChart data={trendData}
+                <CustomPieChart data={chartData} />
+                <CustomBarChart
+                    data={expensesMonthlyGrouped}
+                    symbol={symbol}
+                />
+                <CustomLineChart data={trendData}
                     symbol={symbol} />
             </div>
-
         </WrapperForPage>
     )
 }
