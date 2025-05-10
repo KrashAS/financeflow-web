@@ -1,6 +1,6 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
-import StatisticsPageContent from "@/components/pages/statistics-temp/StatisticsPageContent";
+import StatisticsPageContent from "@/components/pages/statistics/StatisticsPageContent";
 import { DEFAULT_CURRENCY } from "@/constants/currencies";
 import { prisma } from "@/lib/prisma";
 import { groupByMonth } from "@/utils/groupByMonth";
