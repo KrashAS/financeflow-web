@@ -1,5 +1,4 @@
 "use client";
-import { format, subMonths } from "date-fns";
 
 import {
     Bar,
@@ -11,37 +10,17 @@ import {
     YAxis
 } from "recharts";
 
-interface MonthlyData {
-    createdAt: Date;
-    amount: number;
+interface BarChartData {
+    month: string;
+    value: number;
 }
 
-interface ExpensesBarChartProps {
-    monthlyExpensesRaw: MonthlyData[];
+interface Props {
+    data: BarChartData[];
     symbol: string;
 }
 
-export default function ExpensesBarChart({
-    monthlyExpensesRaw,
-    symbol,
-}: ExpensesBarChartProps) {
-
-    const monthsMap = new Map<string, number>();
-    for (let i = 5; i >= 0; i--) {
-        const d = subMonths(new Date(), i);
-        const key = format(d, "MMM yyyy");
-        monthsMap.set(key, 0);
-    }
-
-    monthlyExpensesRaw.forEach(({ amount, createdAt }) => {
-        const key = format(createdAt, "MMM yyyy");
-        if (monthsMap.has(key)) monthsMap.set(key, monthsMap.get(key)! + amount);
-    });
-
-    const data = Array.from(monthsMap, ([month, value]) => ({ month, value }));
-
-
-
+export default function CustomBarChart({ data, symbol }: Props) {
     return (
         <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow space-y-4">
             <div>
@@ -59,13 +38,13 @@ export default function ExpensesBarChart({
                         stroke="#e2e8f0" />
                     <XAxis
                         dataKey="month"
-                        /* tick={{ fill: "var(--color-brand)" }} */
                         axisLine={{ stroke: "var(--color-text-muted)" }}
+                    /* tick={{ fill: "var(--color-text-muted)" }} */
                     />
                     <YAxis
                         tickFormatter={(val) => `${symbol}${val.toFixed(0)}`}
-                        /* tick={{ fill: "var(--color-brand)" }} */
                         axisLine={{ stroke: "var(--color-text-muted)" }}
+                    /* tick={{ fill: "var(--color-text-muted)" }} */
                     />
                     <Tooltip
                         formatter={(value: number) => `${symbol}${value.toFixed(2)}`}
@@ -74,9 +53,7 @@ export default function ExpensesBarChart({
                             border: "none",
                             color: "var(--color-foreground)",
                         }}
-                        itemStyle={{
-                            color: "var(--color-foreground)",
-                        }}
+                        itemStyle={{ color: "var(--color-foreground)" }}
                     />
                     <Bar dataKey="value"
                         fill="#f87171"
