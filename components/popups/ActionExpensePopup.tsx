@@ -1,11 +1,10 @@
 'use client';
 
 import { POPUP_NAMES } from '@/constants/popupNames';
-import useOnClickOutside from '@/lib/hooks/useOnClickOutside';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/useRedux';
 import { closePopup } from '@/lib/redux/features/popup/popupSlice';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import Input from '../ui/inputs/Input';
 import PopupWrapper from './PopupWrapper';
@@ -17,7 +16,6 @@ export const ActionExpensePopup = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [amount, setAmount] = useState(`${payload?.amount}`);
     const dispatch = useAppDispatch();
-    const modalRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
     const deleteExpense = async (id: number) => {
@@ -62,8 +60,6 @@ export const ActionExpensePopup = () => {
             console.error("edit expense", err);
         }
     };
-
-    useOnClickOutside(modalRef, () => dispatch(closePopup()));
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
