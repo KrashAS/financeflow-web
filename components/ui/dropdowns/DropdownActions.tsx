@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import useOnClickOutside from "@/lib/hooks/useOnClickOutside";
+import { useRef, useState } from "react";
 
 type Props = {
     onEdit: () => void;
@@ -13,16 +14,7 @@ export default function DropdownActions({ onEdit, onDelete, openUp = false, clas
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setOpen(false);
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+    useOnClickOutside(dropdownRef, () => setOpen(false));
 
     return (
         <div className={`relative ${className}`}

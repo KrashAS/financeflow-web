@@ -1,11 +1,10 @@
 'use client';
 
 import { POPUP_NAMES } from '@/constants/popupNames';
-import useOnClickOutside from '@/lib/hooks/useOnClickOutside';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/useRedux';
 import { closePopup } from '@/lib/redux/features/popup/popupSlice';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import Input from '../ui/inputs/Input';
 import PopupWrapper from './PopupWrapper';
@@ -17,7 +16,6 @@ export const ActionBudgetPopup = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [amount, setAmount] = useState(`${payload?.amount}`);
     const dispatch = useAppDispatch();
-    const modalRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
     const deleteBudget = async (id: number) => {
@@ -63,11 +61,9 @@ export const ActionBudgetPopup = () => {
         }
     };
 
-
-    useOnClickOutside(modalRef, () => dispatch(closePopup()));
-
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+
         if (!payload?.id) return;
 
         if (activePopup === POPUP_NAMES.DELETE_BUDGET) {
@@ -87,7 +83,7 @@ export const ActionBudgetPopup = () => {
                 <span className="block">{`${payload?.name} ${payload?.createdAt}`}</span>
             </h2>
             <p className="text-sm text-center text-gray-600">{description}</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
                 {activePopup === POPUP_NAMES.EDIT_BUDGET && <div>
                     <Input type="text"
                         id="budget-name"

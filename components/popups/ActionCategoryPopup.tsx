@@ -1,11 +1,10 @@
 'use client';
 
 import { POPUP_NAMES } from '@/constants/popupNames';
-import useOnClickOutside from '@/lib/hooks/useOnClickOutside';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/useRedux';
 import { closePopup } from '@/lib/redux/features/popup/popupSlice';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import Input from '../ui/inputs/Input';
 import InputColor from '../ui/inputs/InputColor';
@@ -18,7 +17,6 @@ export const ActionCategoryPopup = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [color, setColor] = useState(`${payload?.color}`);
     const dispatch = useAppDispatch();
-    const modalRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
 
     const deleteCategory = async (id: number) => {
@@ -64,8 +62,6 @@ export const ActionCategoryPopup = () => {
             console.error("edit category", err);
         }
     };
-
-    useOnClickOutside(modalRef, () => dispatch(closePopup()));
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();

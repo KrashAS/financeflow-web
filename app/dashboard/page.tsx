@@ -61,9 +61,6 @@ export default async function DashboardPage() {
 
     const trendData = await getExpenseTrends(userId, userSetting?.currency ?? '');
 
-    console.log(trendData);
-
-
     if (!totalBudget) return <EmptyDashboardInfo />
 
     return (

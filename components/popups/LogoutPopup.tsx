@@ -1,11 +1,9 @@
 'use client'
-import useOnClickOutside from '@/lib/hooks/useOnClickOutside';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks/useRedux';
 import { closePopup } from '@/lib/redux/features/popup/popupSlice';
 import { storage } from '@/utils/storage';
 import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
 import { Button } from '../ui/buttons/Button';
 import PopupWrapper from './PopupWrapper';
 
@@ -14,7 +12,6 @@ export const LogoutPopup = () => {
     const dispatch = useAppDispatch();
     const { title } = useAppSelector((state) => state.popup);
     const router = useRouter();
-    const modalRef = useRef<HTMLDivElement>(null);
 
     const handleClose = () => {
         dispatch(closePopup());
@@ -27,8 +24,6 @@ export const LogoutPopup = () => {
         handleClose();
         router.push('/auth/login');
     };
-
-    useOnClickOutside(modalRef, () => { dispatch(closePopup()) });
 
     return (
         <PopupWrapper>

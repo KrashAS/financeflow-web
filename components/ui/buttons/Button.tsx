@@ -10,12 +10,13 @@ interface ButtonProps {
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ title, onClickButton, className = '', disabled = false, type = 'button' }, ref) => {
+
         return (
             <button
                 ref={ref}
                 type={type}
-                className={`${className}`}
-                onClick={onClickButton}
+                className={className}
+                onClick={type === 'submit' ? undefined : onClickButton}
                 disabled={disabled}
             >
                 {title}
