@@ -1,9 +1,9 @@
 import { TableCell } from "@/components/ui/tables/TableCell";
 import { TableRow } from "@/components/ui/tables/TableRow";
-import { Budget } from "@/types/budget";
+import { FormattedBudget } from "@/types/budget";
 
 interface IProps {
-    budget: Budget;
+    budget: FormattedBudget;
     currencySymbol: string;
     isAction?: boolean
 };

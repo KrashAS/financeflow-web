@@ -1,4 +1,4 @@
-export interface Budget {
+export interface FormattedBudget {
     id: number;
     name: string;
     amount: number;

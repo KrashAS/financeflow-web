@@ -5,9 +5,12 @@ import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
 import { formatDate } from "@/lib/formatDate";
 import { prisma } from "@/lib/prisma";
+import { FormattedBudget } from "@/types/budget";
+import { Budget, Expense } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+
 
 
 export default async function BudgetsPage() {
@@ -21,12 +24,12 @@ export default async function BudgetsPage() {
     const currencyInfo = CURRENCIES.find(element => element.code === currencyCode) || CURRENCIES[0];
     const symbol = CURRENCIES.find(element => element.code === currencyCode)?.symbol || "";
 
-    const budgets = await prisma.budget.findMany({
+    const budgets: Budget[] = await prisma.budget.findMany({
         where: { userId, currency: currencyCode },
         orderBy: { createdAt: "desc" },
     });
 
-    const expenses = await prisma.expense.findMany({
+    const expenses: Expense[] = await prisma.expense.findMany({
         where: {
             userId,
             currency: currencyCode,
@@ -35,7 +38,7 @@ export default async function BudgetsPage() {
         orderBy: { createdAt: "desc" },
     });
 
-    const formattedBudgets = budgets.map(({ id, title, amount, createdAt }) => ({
+    const formattedBudgets: FormattedBudget[] = budgets.map(({ id, title, amount, createdAt }) => ({
         id,
         name: title,
         amount,
@@ -43,8 +46,8 @@ export default async function BudgetsPage() {
         createdAt: formatDate(createdAt),
     }));
 
-    const totalBudget = budgets.reduce((sum, element) => sum + element.amount, 0);
-    const totalExpenses = expenses.reduce((sum, element) => sum + element.amount, 0);
+    const totalBudget = budgets.reduce((sum: number, element: Budget) => sum + element.amount, 0);
+    const totalExpenses = expenses.reduce((sum: number, element: Expense) => sum + element.amount, 0);
     const balance = totalBudget - totalExpenses;
 
     return (
