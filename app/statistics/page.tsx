@@ -2,6 +2,7 @@ import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import StatisticsPageContent from "@/components/pages/statistics/StatisticsPageContent";
 import { DEFAULT_CURRENCY } from "@/constants/currencies";
+import { DATE_FILTER_DEFAULT } from "@/constants/filters";
 import { prisma } from "@/lib/prisma";
 import { groupByMonth } from "@/utils/groupByMonth";
 import { getServerSession } from "next-auth";
@@ -24,10 +25,10 @@ export default async function StatisticsPage() {
 
     const currency = setting?.currency || DEFAULT_CURRENCY;
 
-    const filteredExpenses = expenses.filter(e => e.currency === currency);
-    const filteredBudgets = budgets.filter(b => b.currency === currency);
+    const filteredExpenses = expenses.filter(element => element.currency === currency);
+    const filteredBudgets = budgets.filter(element => element.currency === currency);
 
-    const expensesByMonth = groupByMonth(filteredExpenses, 6);
+    const expensesByMonth = groupByMonth(filteredExpenses, DATE_FILTER_DEFAULT.months);
 
     return (
         <WrapperForPage>

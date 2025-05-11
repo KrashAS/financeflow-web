@@ -7,11 +7,11 @@ import { TableWrapper } from "@/components/ui/tables/TableWrapper";
 import { POPUP_NAMES } from "@/constants/popupNames";
 import { useAppDispatch } from "@/lib/hooks/useRedux";
 import { openPopup } from "@/lib/redux/features/popup/popupSlice";
-import { Budget } from "@/types/budget";
+import { FormattedBudget } from "@/types/budget";
 import { BudgetsTableRow } from "./BudgetsTableRow";
 
 interface BudgetsListProps {
-    budgets: Budget[];
+    budgets: FormattedBudget[];
 }
 
 export default function BudgetsTable({ budgets }: BudgetsListProps) {
