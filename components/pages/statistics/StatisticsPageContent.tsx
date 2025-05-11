@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/buttons/Button";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES } from "@/constants/currencies";
-import { DATE_FILTERS } from "@/constants/filters";
+import { DATE_FILTER_DEFAULT, DATE_FILTERS } from "@/constants/filters";
+import { DateFilter } from "@/types/filters";
 import { Budget, Expense, ExpenseCategory } from "@prisma/client";
 import { useMemo, useState } from "react";
 import CustomBarChart from "../../ui/charts/CustomBarChart";
@@ -25,7 +26,7 @@ export default function StatisticsPageContent({
     currency,
     expensesByMonth,
 }: IProps) {
-    const [filter, setFilter] = useState("6m");
+    const [filter, setFilter] = useState<DateFilter>(DATE_FILTER_DEFAULT);
 
     const symbol = CURRENCIES.find(element => element.code === currency)?.symbol || "";
 
@@ -71,12 +72,12 @@ export default function StatisticsPageContent({
                 Select a time range to display your spending statistics:
             </p>
             <div className="flex gap-2 flex-wrap">
-                {DATE_FILTERS.map(({ value, label }) => (
+                {DATE_FILTERS.map((object) => (
                     <Button
-                        key={value}
-                        className={`btn rounded px-4 py-2 ${filter === value ? "btn-primary" : "btn-secondary"}`}
-                        onClickButton={() => setFilter(value)}
-                        title={label}
+                        key={object.value}
+                        className={`btn rounded px-4 py-2 ${filter.value === object.value ? "btn-primary" : "btn-secondary"}`}
+                        onClickButton={() => setFilter(object)}
+                        title={object.label}
                     />
                 ))}
             </div>
