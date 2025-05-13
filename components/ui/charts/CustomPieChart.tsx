@@ -10,9 +10,10 @@ type CategoryData = {
 export default function CustomPieChart({ data }: { data: CategoryData[] }) {
     return (
         <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-            <h2 className="text-xl font-bold mb-2">Expenses by Category</h2>
             <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                This pie chart shows how your expenses are distributed across different categories.
+                This pie chart breaks down your expenses by category (e.g., groceries, transport, entertainment).
+                The size of each slice reflects how much you spent in that category relative to your total spending.
+                Use it to see where your money goes and identify areas where you might want to cut back.
             </p>
             {data.map((element, index) => (
                 <div key={index + 1}

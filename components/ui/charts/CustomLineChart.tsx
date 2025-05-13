@@ -25,9 +25,10 @@ export default function CustomLineChart({ data, symbol }: Props) {
 
     return (
         <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
-            <p className="text-lg font-semibold mb-2">📈 Spending & Balance Trend</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                Overview of your budget, expenses, and remaining balance over time.
+            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                This line chart shows how your daily expenses change over time during the selected period.
+                Each point on the graph represents the total amount you spent on that specific day.
+                Use it to track spending spikes and patterns in your day-to-day life.
             </p>
 
             <ResponsiveContainer width="100%"

@@ -24,9 +24,9 @@ export default function CustomBarChart({ data, symbol }: Props) {
     return (
         <div className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow space-y-4">
             <div>
-                <h2 className="text-xl font-semibold mb-2">Monthly Expenses</h2>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
-                    This bar chart shows your total expenses for each of the last 6 months.
+                    This bar chart displays your total expenses for each of the past selected months.
+                    It helps you understand how much you’re spending monthly and how your spending habits are evolving.
                 </p>
             </div>
 
