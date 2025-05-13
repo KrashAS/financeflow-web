@@ -38,6 +38,7 @@ model ExpenseCategory {
   createdAt DateTime  @default(now())
 
   expenses  Expense[]
+  transactions Transaction[]
 }
 
 model Expense {
@@ -50,4 +51,22 @@ model Expense {
 
   categoryId Int
   category   ExpenseCategory @relation(fields: [categoryId], references: [id])
+}
+
+enum TransactionType {
+  EXPENSE
+  INCOME
+  TRANSFER
+}
+
+model Transaction {
+  id         Int              @id @default(autoincrement())
+  userId     String
+  title      String
+  type       TransactionType 
+  amount     Float
+  currency   String
+  category   ExpenseCategory? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
+  createdAt  DateTime         @default(now())
 }
