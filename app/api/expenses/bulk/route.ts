@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { TransactionType } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../../auth/[...nextauth]/authOptions";
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
                 categoryId: e.categoryId,
                 currency: e.currency,
                 userId: session.user.uid,
+                createdAt: e.createdAt ? new Date(e.createdAt) : new Date(),
             }));
 
         if (!data.length) {
@@ -44,6 +46,18 @@ export async function POST(req: NextRequest) {
                 { status: 400 }
             );
         }
+
+        const transactionsData = data.map((e) => ({
+            title: e.title,
+            amount: e.amount,
+            categoryId: e.categoryId,
+            currency: e.currency,
+            userId: e.userId,
+            type: TransactionType.EXPENSE,
+            createdAt: e.createdAt,
+        }));
+
+        await prisma.transaction.createMany({ data: transactionsData });
 
         const created = await prisma.expense.createMany({ data });
 

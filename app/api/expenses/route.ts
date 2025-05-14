@@ -31,7 +31,6 @@ export async function PATCH(req: NextRequest) {
 
     const userId = session.user.uid;
     const { id, title, amount } = await req.json();
-
     const numericId = Number(id);
 
     if (!numericId || !title || typeof amount !== "number" || amount <= 0) {
@@ -50,6 +49,20 @@ export async function PATCH(req: NextRequest) {
         const updatedExpense = await prisma.expense.update({
             where: { id: numericId },
             data: { title, amount },
+        });
+
+        await prisma.transaction.updateMany({
+            where: {
+                userId,
+                title: expense.title,
+                amount: expense.amount,
+                type: "EXPENSE",
+                createdAt: expense.createdAt,
+            },
+            data: {
+                title,
+                amount,
+            },
         });
 
         return NextResponse.json(updatedExpense);
@@ -83,6 +96,16 @@ export async function DELETE(req: NextRequest) {
         }
 
         await prisma.expense.delete({ where: { id: numericId } });
+
+        await prisma.transaction.deleteMany({
+            where: {
+                userId,
+                title: expense.title,
+                amount: expense.amount,
+                type: "EXPENSE",
+                createdAt: expense.createdAt,
+            },
+        });
 
         return NextResponse.json({ message: "Deleted successfully" });
     } catch (err) {
