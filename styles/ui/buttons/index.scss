@@ -4,6 +4,11 @@ a {
         @apply cursor-pointer hover:transition-colors;
     }
 
+    &:disabled,
+    &.disabled {
+        @apply opacity-50 cursor-default pointer-events-none;
+    }
+
     &.btn-primary {
         @apply bg-blue-600 text-white  hover:bg-blue-700;
     }
