@@ -1,42 +1,41 @@
 "use client";
 
+import { TableBody } from "@/components/ui/tables/TableBody";
+import { TableHeader } from "@/components/ui/tables/TableHeader";
+import { TableWrapper } from "@/components/ui/tables/TableWrapper";
 import { ExpenseCategory, Transaction } from "@prisma/client";
+import TransactionsEmpty from "./TransactionsEmpty";
+import { TransactionsTableRow } from "./TransactionsTableRow";
 
 type Props = {
     transactions: (Transaction & { category: ExpenseCategory | null })[];
 };
 
 export default function TransactionsPageContent({ transactions }: Props) {
+    if (!transactions.length) {
+        return <TransactionsEmpty />;
+    }
     return (
         <div className="space-y-4">
-            <p className="text-gray-600 dark:text-gray-300">
-                Below is a list of all your financial transactions sorted by date.
-            </p>
-
             <div className="overflow-x-auto">
-                <table className="min-w-full text-sm text-left">
-                    <thead>
-                        <tr>
-                            <th className="p-2">Date</th>
-                            <th className="p-2">Title</th>
-                            <th className="p-2">Type</th>
-                            <th className="p-2">Category</th>
-                            <th className="p-2 text-right">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {transactions.map(tx => (
-                            <tr key={tx.id}
-                                className="border-t">
-                                <td className="p-2">{new Date(tx.createdAt).toLocaleDateString()}</td>
-                                <td className="p-2">{tx.title}</td>
-                                <td className="p-2">{tx.type}</td>
-                                <td className="p-2">{tx.category?.name || "-"}</td>
-                                <td className="p-2 text-right">{tx.amount.toFixed(2)} {tx.currency}</td>
-                            </tr>
+                <TableWrapper>
+                    <TableHeader
+                        columns={[
+                            { title: "Date" },
+                            { title: "Title" },
+                            { title: "Type" },
+                            { title: "Category" },
+                            { title: "Amount", align: "right" },
+                        ]}
+                    />
+                    <TableBody>
+                        {transactions.map((element) => (
+                            <TransactionsTableRow key={element.id}
+                                transaction={element}
+                            />
                         ))}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </TableWrapper>
             </div>
         </div>
     );
