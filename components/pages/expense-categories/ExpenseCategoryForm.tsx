@@ -11,6 +11,7 @@ export default function ExpenseCategoryForm() {
     const [name, setName] = useState("");
     const [color, setColor] = useState("#3B82F6");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -29,7 +30,7 @@ export default function ExpenseCategoryForm() {
             router.push("/expense-categories");
         } else {
             const err = await res.json();
-            alert(err.error || "Failed to create category");
+            setErrorMessage(err.error || "Failed to create category");
             setIsSubmitting(false);
         }
     };
@@ -38,6 +39,7 @@ export default function ExpenseCategoryForm() {
         <form
             onSubmit={handleSubmit}
             className="bg-white dark:bg-[var(--color-dark-bg)] border border-[var(--color-border-default)] dark:border-[var(--color-dark-border-default)] p-6 rounded-xl shadow-md space-y-4"
+            noValidate
         >
             <Input type="text"
                 id="category-name"
@@ -52,10 +54,11 @@ export default function ExpenseCategoryForm() {
                 onChange={setColor}
                 classNameWrapper="mb-4"
             />
+            {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
             <div className="flex justify-between">
                 <Button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !name || !color}
                     className="btn btn-primary font-medium px-4 py-2 rounded"
                     title={isSubmitting ? "Saving..." : "Create Category"}
                 />

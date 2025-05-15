@@ -18,7 +18,7 @@ export default function InputNumber({
     value,
     onChange,
     id = "number",
-    label = "Number",
+    label,
     placeholder = "",
     isFocused,
     classNameWrapper = "",
