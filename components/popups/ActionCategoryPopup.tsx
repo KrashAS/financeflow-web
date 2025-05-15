@@ -84,7 +84,8 @@ export const ActionCategoryPopup = () => {
                 <span className="block">{`${payload?.name} ${payload?.createdAt}`}</span>
             </h2>
             <p className="text-sm text-center text-gray-600">{description}</p>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}
+                noValidate>
                 {activePopup === POPUP_NAMES.EDIT_CATEGORY && <div>
                     <Input type="text"
                         id="category-name"
@@ -95,7 +96,7 @@ export const ActionCategoryPopup = () => {
                         classNameLabel="text-black"
                         placeholder="Enter category"
                         isFocused={true}
-                        required />
+                    />
                     <InputColor
                         value={color}
                         onChange={setColor}
@@ -110,6 +111,7 @@ export const ActionCategoryPopup = () => {
                         type="submit"
                         className={`px-4 py-2 rounded-xl btn ${activePopup === POPUP_NAMES.DELETE_CATEGORY ? "btn-warning" : "btn-primary"}`}
                         title={activePopup === POPUP_NAMES.DELETE_CATEGORY ? "Delete" : "Confirm"}
+                        disabled={activePopup === POPUP_NAMES.EDIT_CATEGORY && (!name || !color)}
                     />
                     <Button
                         type="button"
