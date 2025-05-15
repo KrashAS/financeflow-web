@@ -77,7 +77,8 @@ export default function ExpenseMultiForm({ categories, currency }: Props) {
 
     return (
         <form onSubmit={handleSubmit}
-            className="space-y-6">
+            className="space-y-6"
+            noValidate>
             <fieldset className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {categories.map((cat) => (
                     <label

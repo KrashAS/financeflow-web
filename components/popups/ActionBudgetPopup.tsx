@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from '../ui/buttons/Button';
 import Input from '../ui/inputs/Input';
+import InputNumber from '../ui/inputs/InputNumber';
 import PopupWrapper from './PopupWrapper';
 
 
@@ -83,7 +84,8 @@ export const ActionBudgetPopup = () => {
                 <span className="block">{`${payload?.name} ${payload?.createdAt}`}</span>
             </h2>
             <p className="text-sm text-center text-gray-600">{description}</p>
-            <form onSubmit={handleSubmit} >
+            <form onSubmit={handleSubmit}
+                noValidate>
                 {activePopup === POPUP_NAMES.EDIT_BUDGET && <div>
                     <Input type="text"
                         id="budget-name"
@@ -94,16 +96,16 @@ export const ActionBudgetPopup = () => {
                         label="Budget Name"
                         placeholder="Enter the income name"
                         isFocused={true}
-                        required />
-                    <Input type="number"
+                    />
+                    <InputNumber
                         id="budget-amount"
                         classNameWrapper="mt-3"
                         classNameLabel="text-black"
                         value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
+                        onChange={(element) => setAmount(element)}
                         label={`Amount${payload?.currencySymbol ? `, ${payload.currencySymbol}` : ""}`}
                         placeholder="Enter the income amount"
-                        required />
+                    />
 
                 </div>}
                 {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
@@ -112,6 +114,7 @@ export const ActionBudgetPopup = () => {
                         type="submit"
                         className={`px-4 py-2 rounded-xl btn ${activePopup === POPUP_NAMES.DELETE_BUDGET ? "btn-warning" : "btn-primary"}`}
                         title={activePopup === POPUP_NAMES.DELETE_BUDGET ? "Delete" : "Confirm"}
+                        disabled={activePopup === POPUP_NAMES.EDIT_BUDGET && (!amount || !name)}
                     />
                     <Button
                         type="button"
@@ -122,6 +125,5 @@ export const ActionBudgetPopup = () => {
                 </div>
             </form>
         </PopupWrapper>
-
     );
 };
