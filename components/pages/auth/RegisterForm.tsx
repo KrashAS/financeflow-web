@@ -35,11 +35,6 @@ export default function RegisterForm() {
             setError(data.error || "Failed to register.");
             return;
         }
-
-        setEmail("");
-        setPassword("");
-        setName("");
-        setError("");
         router.push("/auth/login");
     };
 
