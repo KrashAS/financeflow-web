@@ -14,6 +14,7 @@ export default function BudgetForm() {
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const router = useRouter();
 
     const currencyCode = useSelector((state: RootState) => state.currency.code);
@@ -41,7 +42,7 @@ export default function BudgetForm() {
             router.push("/budgets");
         } else {
             const { error } = await res.json();
-            alert(error || "Failed to create budget");
+            setErrorMessage(error || "Failed to create budget");
             setIsSubmitting(false);
         }
     };
@@ -50,6 +51,7 @@ export default function BudgetForm() {
         <form
             onSubmit={handleSubmit}
             className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-8 rounded-xl shadow-md w-full space-y-6"
+            noValidate
         >
             <Input type="text"
                 id="budget-name"
@@ -64,6 +66,7 @@ export default function BudgetForm() {
                 onChange={setAmount}
                 placeholder="Enter the income amount"
                 label={`Amount${currencySymbol ? `, ${currencySymbol}` : ""}`} />
+            {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
             <div className="flex justify-between">
                 <Button
                     type="submit"
