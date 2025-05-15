@@ -40,7 +40,8 @@ export default function SubmitStatisticForm() {
 
     return (
         <form onSubmit={handleSubmit}
-            className="space-y-4 max-w-md">
+            className="space-y-4 max-w-md"
+            noValidate>
             <div>
                 <label className="block mb-1">Metric</label>
                 <select
@@ -65,7 +66,6 @@ export default function SubmitStatisticForm() {
                     value={amount}
                     onChange={(event) => setAmount(event.target.value)}
                     className="w-full border px-3 py-2 rounded"
-                    required
                 />
             </div>
             {error && <p className="text-red-500">{error}</p>}

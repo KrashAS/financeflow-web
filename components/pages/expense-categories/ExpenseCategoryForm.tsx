@@ -48,7 +48,7 @@ export default function ExpenseCategoryForm() {
                 label="Budget Name"
                 placeholder="Enter category"
                 isFocused={true}
-                required />
+            />
             <InputColor
                 value={color}
                 onChange={setColor}
