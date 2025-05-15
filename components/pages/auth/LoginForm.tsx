@@ -39,19 +39,15 @@ export default function LoginForm() {
                     name: user.name || null,
                 });
             }
-            setEmail("");
-            setPassword("");
-            setError("");
             router.push("/dashboard");
         }
     };
 
-
-
     return (
         <div className="h-[calc(100vh-4rem)] flex items-center justify-center bg-background p-4">
             <form onSubmit={handleSubmit}
-                className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-md w-full max-w-md">
+                className="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-md w-full max-w-md"
+                noValidate>
                 <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
                 <div className="mb-4">
                     <InputEmail id="email"
@@ -69,8 +65,8 @@ export default function LoginForm() {
                 {error && <p className="text-red-500 mb-4">{error}</p>}
                 <Button type="submit"
                     className="btn btn-primary w-full py-2 px-4 rounded"
-                    title='Sign In' />
-
+                    title='Sign In'
+                    disabled={!email || !password} />
                 <p className="text-center mt-4 text-sm text-gray-600 dark:text-gray-400">
                     Don&apos;t have an account?{" "}
                     <Link href="/auth/register"

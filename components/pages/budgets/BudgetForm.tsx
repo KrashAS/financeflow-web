@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/buttons/Button";
 import Input from "@/components/ui/inputs/Input";
+import InputNumber from "@/components/ui/inputs/InputNumber";
 import { CURRENCIES } from "@/constants/currencies";
 import { RootState } from "@/lib/redux/store";
 import Link from "next/link";
@@ -57,18 +58,16 @@ export default function BudgetForm() {
                 label="Budget Name"
                 placeholder="Enter the income name"
                 isFocused={true}
-                required />
-            <Input type="number"
-                id="budget-amount"
+            />
+            <InputNumber id="budget-amount"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                label={`Amount${currencySymbol ? `, ${currencySymbol}` : ""}`}
+                onChange={setAmount}
                 placeholder="Enter the income amount"
-                required />
+                label={`Amount${currencySymbol ? `, ${currencySymbol}` : ""}`} />
             <div className="flex justify-between">
                 <Button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !title || !amount || +amount == 0}
                     className="btn btn-primary font-medium px-4 py-2 rounded"
                     title={isSubmitting ? "Saving..." : "Create Budget"}
                 />

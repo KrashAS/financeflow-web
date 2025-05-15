@@ -24,7 +24,7 @@ export default function InputPassword({
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        if (isTouched) {
+        if (isTouched && onValidationChange) {
             const hasError = value.length > 0 && value.length < MIN_PASSWORD_LENGTH;
             setIsError(hasError);
             onValidationChange?.(hasError);
@@ -71,7 +71,7 @@ export default function InputPassword({
                 {showPassword ? <IconOpenEye /> : <IconClosedEye />}
             </button>
             <div className="min-h-[1.25rem] mt-1">
-                {isTouched && (
+                {isTouched && onValidationChange && (
                     <p className={`text-sm mt-1 ${isError ? "text-red-500" : "text-gray-500"}`}>
                         {isError
                             ? `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`
