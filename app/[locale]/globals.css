@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tailwindcss/utilities";
-@import "../styles/global.scss";
+@import "../../styles/global.scss";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {

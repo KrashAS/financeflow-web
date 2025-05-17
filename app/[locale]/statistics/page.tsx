@@ -2,9 +2,10 @@ import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import StatisticsPageContent from "@/components/pages/statistics/StatisticsPageContent";
 import { DEFAULT_CURRENCY } from "@/constants/currencies";
+import { authOptions } from "@/lib/auth/authOptions";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+
 
 export default async function StatisticsPage() {
     const session = await getServerSession(authOptions);

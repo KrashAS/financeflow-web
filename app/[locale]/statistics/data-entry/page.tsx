@@ -1,7 +1,7 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import WrapperForPage from '@/components/layout/WrapperForPage';
 import UnauthorizedMessage from '@/components/pages/auth/UnauthorizedMessage';
 import SubmitStatisticForm from '@/components/pages/statistics/SubmitStatisticForm';
+import { authOptions } from '@/lib/auth/authOptions';
 import { getServerSession } from 'next-auth';
 
 export default async function DataEntryPage() {

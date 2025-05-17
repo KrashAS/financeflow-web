@@ -1,25 +1,33 @@
-import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/", "/auth/login", "/auth/register"];
+const PUBLIC_FILE = /\.(.*)$/;
 
-export async function middleware(req: NextRequest) {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-    const isAuth = !!token;
+const locales = ["en", "uk"];
+const defaultLocale = "uk";
+
+export function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
-    const isPublic = PUBLIC_PATHS.some(
-        (path) => pathname === path || pathname.startsWith(path)
-    );
-
-    if (!isPublic && !isAuth) {
-        return NextResponse.redirect(new URL("/auth/login", req.url));
+    if (
+        pathname.startsWith("/_next") ||
+        pathname.startsWith("/api") ||
+        pathname.startsWith("/favicon.ico") ||
+        PUBLIC_FILE.test(pathname)
+    ) {
+        return;
     }
 
-    /* if (pathname === "/" && isAuth) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
-    } */
+    const pathnameIsMissingLocale = locales.every(
+        (locale) =>
+            !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    );
+
+    if (pathnameIsMissingLocale) {
+        const url = req.nextUrl.clone();
+        url.pathname = `/${defaultLocale}${pathname}`;
+        return NextResponse.redirect(url);
+    }
 
     return NextResponse.next();
 }

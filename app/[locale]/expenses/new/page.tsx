@@ -1,9 +1,9 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseMultiForm from "@/components/pages/expenses/ExpenseMultiForm";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
+import { authOptions } from "@/lib/auth/authOptions";
 import { formatDate } from "@/lib/formatDate";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
