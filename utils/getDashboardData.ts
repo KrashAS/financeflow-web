@@ -1,5 +1,5 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
+import { authOptions } from "@/lib/auth/authOptions";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 

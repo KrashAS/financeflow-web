@@ -1,7 +1,7 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import BudgetForm from "@/components/pages/budgets/BudgetForm";
+import { authOptions } from "@/lib/auth/authOptions";
 import { getServerSession } from "next-auth";
 
 export default async function NewBudgetPage() {

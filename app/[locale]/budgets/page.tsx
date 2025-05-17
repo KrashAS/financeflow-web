@@ -3,15 +3,13 @@ import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import BudgetsTable from "@/components/pages/budgets/BudgetsTable";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
+import { authOptions } from "@/lib/auth/authOptions";
 import { formatDate } from "@/lib/formatDate";
 import { prisma } from "@/lib/prisma";
 import { FormattedBudget } from "@/types/budget";
 import { Budget, Expense } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-
-
 
 export default async function BudgetsPage() {
     const session = await getServerSession(authOptions);

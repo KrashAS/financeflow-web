@@ -1,7 +1,7 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseCategoryForm from "@/components/pages/expense-categories/ExpenseCategoryForm";
+import { authOptions } from "@/lib/auth/authOptions";
 import { getServerSession } from "next-auth";
 
 

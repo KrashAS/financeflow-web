@@ -7,13 +7,13 @@ import CustomBarChart from "@/components/ui/charts/CustomBarChart";
 import CustomLineChart from "@/components/ui/charts/CustomLineChart";
 import CustomPieChart from "@/components/ui/charts/CustomPieChart";
 import { DEFAULT_CURRENCY } from "@/constants/currencies";
+import { authOptions } from "@/lib/auth/authOptions";
 import { prisma } from "@/lib/prisma";
 import { getDashboardData } from "@/utils/getDashboardData";
 import { getExpenseTrends } from "@/utils/getExpenseTrends";
 import { groupByMonth } from "@/utils/groupByMonth";
 import { startOfMonth, subMonths } from "date-fns";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);

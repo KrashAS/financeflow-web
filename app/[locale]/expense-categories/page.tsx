@@ -1,11 +1,11 @@
 import WrapperForPage from "@/components/layout/WrapperForPage";
 import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpenseCategoriesTable from "@/components/pages/expense-categories/ExpenseCategoriesTable";
+import { authOptions } from "@/lib/auth/authOptions";
 import { formatDate } from "@/lib/formatDate";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 export default async function ExpenseCategoriesPage() {
     const session = await getServerSession(authOptions);

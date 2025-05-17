@@ -3,11 +3,11 @@ import UnauthorizedMessage from "@/components/pages/auth/UnauthorizedMessage";
 import ExpensesTable from "@/components/pages/expenses/ExpensesTable";
 import SummaryCards from "@/components/ui/cards/SummaryCards";
 import { CURRENCIES, DEFAULT_CURRENCY } from "@/constants/currencies";
+import { authOptions } from "@/lib/auth/authOptions";
 import { formatDate } from "@/lib/formatDate";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 
 export default async function ExpensesPage() {
     const session = await getServerSession(authOptions);

@@ -1,21 +1,23 @@
 import Header from "@/components/layout/Header";
 import SessionProviderWrapper from "@/components/layout/SessionProviderWrapper";
 import PopupsContainer from "@/components/popups/PopupsContainer";
+import { SUPPORTED_LOCALES } from "@/i18n/settings";
+import { dir } from 'i18next';
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { notFound } from "next/navigation";
+import StoreProvider from "../StoreProvider";
 import "./globals.css";
-import StoreProvider from "./StoreProvider";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
 });
 
-/* const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
- */
+export function generateStaticParams() {
+    return SUPPORTED_LOCALES.map(locale => ({ locale }));
+}
+
 export const metadata: Metadata = {
     title: "Finance Flow",
     description: "Simple finance tracker",
@@ -24,13 +26,19 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({
-    children,
-}: Readonly<{
+export default async function RootLayout(props: {
     children: React.ReactNode;
-}>) {
+    params: Promise<{ locale: string }>
+}) {
+    const { locale } = await props.params;
+    const { children } = props;
+
+    if (!SUPPORTED_LOCALES.includes(locale)) {
+        notFound();
+    }
     return (
-        <html lang="en">
+        <html lang={locale}
+            dir={dir(locale)}>
             <body
                 className={`bg-white text-black dark:bg-(--color-dark-bg) dark:text-white min-h-screen ${geistSans.variable} antialiased`}
             >
